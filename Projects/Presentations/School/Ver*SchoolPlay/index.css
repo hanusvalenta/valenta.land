@@ -25,6 +25,11 @@ p {
     padding-top: 50px;
 }
 
+.List {
+    width: 500px;
+    height: auto;
+}
+
 .Audio {
     display: flex;
     flex-direction: column;
