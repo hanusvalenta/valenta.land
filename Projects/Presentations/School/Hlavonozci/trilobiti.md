@@ -97,7 +97,7 @@ Opakování dělení
 
 * Neobvyklost
 * Problémy při jeho klasifikaci
-* Lovec trilovitů
+* Lovec trilobitů
 * Nekompletní nálezy
 
 ![bg right](Anomalocaris.jpg)
