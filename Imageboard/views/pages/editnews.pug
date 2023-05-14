@@ -1,0 +1,28 @@
+extends ../layout.pug
+include ../mixins/globalmanagenav.pug
+
+block head
+	title #{__('Edit News')}
+
+block content
+	h1.board-title #{__('Global Management')}
+	br
+	+globalmanagenav('news', true)
+	hr(size=1)
+	h4.no-m-p #{__('Edit Newspost')}:
+	include ../includes/stickynav.pug
+	.form-wrapper.flex-center.mv-10
+		form.form-post(action='/forms/global/editnews' method='POST')
+			input(type='hidden' name='_csrf' value=csrf)
+			input(type='hidden' name='news_id' value=news._id)
+			.table-container.flex-center.mv-5
+				table
+					tr
+						th
+							input.edit.left(type='text' name='title' value=news.title required)
+							- const newsDate = new Date(news.date);
+							time.right.reltime(datetime=newsDate.toISOString()) #{newsDate.toLocaleString(pageLanguage, {hourCycle:'h23'})}
+					tr
+						td
+							textarea.edit.fw(name='message' rows='10' placeholder=__('Supports post styling') required) #{news.message.raw}
+			input(type='submit', value=__('Save'))

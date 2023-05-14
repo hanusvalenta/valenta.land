@@ -1,0 +1,68 @@
+include ./catalogfile.pug
+mixin catalogtile(post, index, overboard=false)
+	- let anchorSubject = post.subject;
+	if post.subject
+		- const subjectAnchorMatch = post.subject.match(/^\/\w+\//);
+		if subjectAnchorMatch
+			- anchorSubject = subjectAnchorMatch[0]
+	.anchor(id=`${post.board}-${anchorSubject}`)
+	.catalog-tile(tabindex=index
+		data-board=post.board
+		data-post-id=post.postId
+		data-user-id=post.userId
+		data-name=post.name
+		data-tripcode=post.tripcode
+		data-subject=post.subject
+		data-filter=((post.subject||'')+(post.nomarkup||'')).toLowerCase()
+		data-date=post.date
+		data-replies=post.replyposts
+		data-bump=post.bumped)
+		- const postURL = `/${post.board}/${modview ? 'manage/' : ''}thread/${post.postId}.html`
+		.post-info
+			if overboard
+				div
+					| #{__('Thread from')} 
+					a.no-decoration.post-subject(href=`/${post.board}/`) /#{post.board}/
+			else
+				input.left.post-check(type='checkbox', name='checkedposts' value=post.postId)
+			if modview
+				a.left.ml-5.bold(href=`recent.html?postid=${post.postId}`) [+]
+			include ../includes/posticons.pug
+			if post.country && post.country.code
+				if post.country.custom === true
+					span(title=post.country.name)
+						img.customflag(src=`/flag/${post.board}/${post.country.src}` alt=' ' loading='lazy')
+					| 
+				else
+					span(class=`flag flag-${post.country.code.toLowerCase()}` title=post.country.name alt=post.country.name)
+					| 
+			a.no-decoration.post-subject(href=postURL) #{post.subject || `#${post.postId}`}
+			| 
+			select.jsonly.postmenu
+				option(value='single') #{__('Hide')}
+				if post.subject	
+					option(value='fsub') #{__('Filter Subject')}
+				if (modview || manage || globalmanage)
+					option(value='edit') #{__('Edit')}
+				if !overboard
+					option(value='moderate') #{__('Moderate')}
+				option(value='watch') #{__('Watch')}
+				option(value='playlist') #{__('Playlist')}
+			br 
+			span(title=__n('Replies', 2)) R: #{post.replyposts}
+			|  / 
+			span(title=__n('Files', 2)) F: #{post.replyfiles + post.files.length}
+			if !overboard
+				|  / 
+				span(title=__('Page')) P: #{Math.ceil(index/10)}
+		if post.files.length > 0
+			.col
+				.row.ct-r1
+					- const file = post.files[0]
+					+catalogfile(postURL, post, file, false)
+				if post.files.length > 1
+					.row.ct-r2.wrap
+						each file, fileindex in post.files.slice(1)
+							+catalogfile(postURL, post, file, true)
+		if post.message
+			pre.no-m-p.post-message !{post.message}

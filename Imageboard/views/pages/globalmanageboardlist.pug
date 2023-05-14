@@ -1,0 +1,79 @@
+extends ../layout.pug
+include ../mixins/ban.pug
+include ../mixins/globalmanagenav.pug
+include ../mixins/boardtable.pug
+
+block head
+	title #{__('Boards')}
+
+block content
+	h1.board-title #{__('Global Management')}
+	br
+	+globalmanagenav('boards')
+	hr(size=1)
+	h4.text-center.no-m-p Filter:
+	.flexcenter.mv-10
+		form.form-post(action='/globalmanage/boards.html' method='GET')
+			input(type='hidden' value=page)
+			.row.wrap.sb
+				.col.mr-5
+					.row
+						.label #{__('Search')}
+						input(type='text' name='search' value=search placeholder=__('URI or tags'))
+					.row
+						.label #{__('Sort')}
+						select(name='sort')
+							option(value='popularity') #{__('Popularity')}
+							option(value='activity' selected=query.sort === 'activity') #{__('Latest Activity')}
+					.row
+						.label #{__('Order')}
+						select(name='direction')
+							option(value='desc') #{__('Descending')}
+							option(value='asc' selected=query.direction === 'asc') #{__('Ascending')}
+				.col
+					.row
+						.label #{__('Unlisted')}
+						label.postform-style.ph-5
+							input(type='checkbox', name='filter_unlisted', value='1' checked=(query.filter_unlisted != null))
+					.row
+						.label #{__('SFW')}
+						label.postform-style.ph-5
+							input(type='checkbox', name='filter_sfw', value='1' checked=(query.filter_sfw != null))
+					.row
+						.label #{__('Abandoned')}
+						label.postform-style.ph-5
+							input(type='checkbox', name='filter_abandoned', value='1' checked=(query.filter_abandoned != null))
+			input(type='submit', value='Filter')
+	if localBoards && localBoards.length > 0
+		h4.text-center.mv-10 Board List:
+		+boardtable(true, true, permissions.get(Permissions.GLOBAL_MANAGE_ACCOUNTS))
+			each board in localBoards
+				tr
+					td 
+						span.left
+							if board.settings.sfw === true
+								span.help(title=__('SFW')) &#x1F4BC;
+								|  
+							if board.settings.unlistedLocal === true
+								span.help(title=__('Unlisted')) &#x1F441;&#xFE0F;
+								|  
+							if !board.owner
+								span.help(title=__('Abandoned')) &#x1F3DA;&#xFE0F;
+								|  
+						a(href=`/${board._id}/index.html`) /#{board._id}/ - #{board.settings.name}
+					if permissions.get(Permissions.GLOBAL_MANAGE_ACCOUNTS)
+						if board.owner
+							td: a(href=`/globalmanage/accounts.html?username=${board.owner}`) #{board.owner}
+						else
+							td -
+					td #{board.settings.description}
+					td #{board.pph}
+					td #{board.ppd}
+					td #{board.ips}
+					td #{board.sequence_value-1}
+					if board.lastPostTimestamp
+						td(style=`background-color: ${board.lastPostTimestamp.color}`) #{board.lastPostTimestamp.text}
+					else
+						td -
+	.pages.text-center.mt-5.mv-0
+		include ../includes/pages.pug

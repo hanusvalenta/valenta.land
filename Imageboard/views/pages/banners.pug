@@ -1,0 +1,24 @@
+extends ../layout.pug
+include ../mixins/boardheader.pug
+include ../mixins/boardnav.pug
+
+block head
+	title /#{board._id}/ - #{__('Banners')}
+
+block content
+	+boardheader(__('Banners'))
+	br
+	include ../includes/stickynav.pug
+	.pages
+		+boardnav('banners', true, false)
+	hr(size=1)
+	if board.banners.length > 0
+		.catalog
+			each banner in board.banners
+				img.board-banner(src=`/banner/${board._id}/${banner}` loading='lazy')
+	else
+		p #{__('Board has no custom banners.')}
+	include ../includes/stickynav.pug
+	hr(size=1)
+	.pages
+		+boardnav('banners', true, false)

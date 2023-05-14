@@ -1,0 +1,33 @@
+/*rei-zero*/
+:root {
+	--icon-color:invert(17%)sepia(89%)saturate(7057%)hue-rotate(2deg)brightness(93%)contrast(120%);
+	--alt-label-color: #29373e;
+	--alt-font-color: #d6d6d6;
+	--background-top: #000E1C;
+	--background-rest: #000E1C;
+	--navbar-color: #29373E;
+	--post-color: #29373E;
+	--post-outline-color: #666666;
+	--label-color: #29373E;
+	--box-border-color: #000;
+	--darken: #00000010;
+	--highlighted-post-color: #193A3A;
+	--highlighted-post-outline-color: #999999;
+	--board-title: #193A3A;
+	--hr: #474747;
+	--font-color: #D6D6D6;
+	--name-color: #117743;
+	--capcode-color: #f00;
+	--subject-color: #CCCCCC;
+	--link-color: #5C99AD;
+	--post-link-color: #00BfFF;
+	--link-hover: #eeeeee;
+	--accent-color: #29373E;
+	--input-borders: #a9a9a9;
+	--input-color: lightgray;
+	--input-background: #001229;
+	--dice-color: darkorange;
+	--title-color: #d70000;
+	--greentext-color: #789922;
+	--pinktext-color:#E0727F;
+}

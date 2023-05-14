@@ -1,0 +1,34 @@
+node_modules/
+backup.sh
+
+#secrets
+configs/*.json
+configs/*.js
+
+# ignore jschan tmp and static
+tmp/
+static/*
+docker/static/*
+
+# ignore some gulp resources
+/gulp/res/css/codethemes
+gulp/res/css/locals.css
+gulp/res/css/custom.css
+gulp/res/icons/*
+
+# no compiledclients js files generated from .pug in gulpfile
+gulp/res/js/locals.js
+gulp/res/js/post.js
+gulp/res/js/modal.js
+gulp/res/js/captchaformsection.js
+gulp/res/js/pugfilters.js
+gulp/res/js/threadwatcher.js
+gulp/res/js/watchedthread.js
+gulp/res/js/pugruntime.js
+gulp/res/js/uploaditem.js
+gulp/res/js/socket.io.js
+
+# some ide and testing files, artefacts, etc
+.idea/
+coverage/
+junit.xml

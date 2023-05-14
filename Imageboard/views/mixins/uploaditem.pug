@@ -1,0 +1,16 @@
+mixin uploaditem(item)
+	div
+		.upload-item
+			img.upload-thumb(src=item.url)
+			p #{item.name}
+			a.close ×
+		if item.hash
+			.row.sb
+				if item.spoilers
+					label
+						input(type='checkbox', name='spoiler', value=item.hash)
+						| #{__('Spoiler')}
+				if item.stripFilenames
+					label
+						input(type='checkbox', name='strip_filename', value=item.hash)
+						| #{__('Strip Filename')}

@@ -1,0 +1,50 @@
+:root {
+	--icon-color:invert(15%) sepia(66%) saturate(7479%) hue-rotate(6deg) brightness(98%) contrast(124%);
+	--alt-label-color: #182f3f;
+	--alt-font-color: #acacac;
+	--background-top: #0d1a1d;
+	--background-rest: #0d1a1d;
+	--navbar-color: #182f3f9e;
+	--post-color: #182f3f;
+	--post-outline-color: #82cece;
+	--label-color: #182f3f;
+	--box-border-color: #82cece;
+	--darken: #ffffff10;
+	--highlighted-post-color: #244860;
+	--highlighted-post-outline-color: #82cece;
+	--board-title: #82cece;
+	--hr: #82cece;
+	--font-color: #acacac;
+	--name-color: #82cece;
+	--capcode-color: #f00;
+	--subject-color: #46b5b5;
+	--link-color: #82cece;
+	--post-link-color: #82cece;
+	--link-hover: #acacac;
+	--accent-color: #82cece;
+	--input-borders: #82cece;
+	--input-color: #acacac;
+	--input-background: #182f3f;
+	--dice-color: darkorange;
+	--title-color: #d70000;
+	--greentext-color: #789922;
+	--pinktext-color: #e0727f;
+}
+body {
+	background: var(--background-rest) url(/css/themes/assets/mushroom.png);
+}
+a.post-name {
+	color: #a0ffff;
+}
+a.quote {
+	color: #81a2be;
+}
+table {
+	border: 1px solid var(--box-border-color);
+}
+tr {
+	background: var(--background-rest) url(/css/themes/assets/mushroom.png);
+}
+.captcha {
+	filter: invert(90%);
+}

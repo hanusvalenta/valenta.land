@@ -1,0 +1,80 @@
+extends ../layout.pug
+include ../mixins/post.pug
+include ../mixins/boardnav.pug
+include ../mixins/managenav.pug
+include ../mixins/boardheader.pug
+include ../mixins/announcements.pug
+
+block head
+	- const subjectString = thread.subject || (thread.nomarkup ? `${thread.nomarkup.substring(0, globalLimits.fieldLength.subject)}${thread.nomarkup.length > globalLimits.fieldLength.subject ? '...' : ''}` : thread.postId);
+	title /#{board._id}/ - #{subjectString}
+	if !modview
+		meta(property='og:title', content=thread.subject)
+		meta(property='og:description', content=thread.nomarkup)
+		if thread.files.length > 0
+			if thread.spoiler || thread.files[0].spoiler
+				meta(property='og:image', content='/file/spoiler.png')
+			else
+				- const file = thread.files[0];
+				- const maintype = file.mimetype.split('/')[0];
+				case maintype
+					when 'image'
+					when 'video'
+					when 'audio'
+						meta(property=`og:${maintype}`, content=`/file/${file.filename}`)
+						- break
+					default
+						- break
+
+block content
+	+boardheader(modview ? __('Mod View') : null)
+	br
+	if thread.replyposts >= board.settings.replyLimit && !thread.cyclic && !modview
+		p.title.text-center #{__('⊖ Thread has reached reply limit.')}
+	else
+		include ../includes/postform.pug
+		br
+	+announcements()
+	include ../includes/stickynav.pug
+	if modview
+		+managenav(null, true)
+	else
+		.pages
+			+boardnav(null, true, true)
+	- const uids = board.settings.ids ? new Set() : void 0;
+	form(action=`/forms/board/${board._id}/${modview ? 'mod' : ''}actions` method='POST' enctype='application/x-www-form-urlencoded')
+		if modview
+			input(type='hidden' name='_csrf' value=csrf)
+		hr(size=1)
+		.thread
+			- uids && thread.userId && uids.add(thread.userId)
+			+post(thread)
+			for post in thread.replies
+				- uids && post.userId && uids.add(post.userId)
+				+post(post)
+		if thread.replyposts >= board.settings.replyLimit && !thread.cyclic && !modview
+			p.title.text-center #{__('⊖ Thread has reached reply limit.')}
+		else
+			a.bottom-reply.no-decoration.post-button(href='#postform') [#{__('New Reply')}]
+		hr(size=1)
+		.wrapbar
+			if modview
+				+managenav(null, true)
+			else
+				.pages
+					+boardnav(null, true, true)
+			#threadstats 
+				span #{__n('%s replies', thread.replyposts)}
+				|  |  
+				span #{__n('%s files', thread.replyfiles + thread.files.length)}
+				if board.settings.ids
+					|  |   
+					span #{__n('%s UIDs', uids.size)}
+		.jsonly#livetext
+			.dot#livecolor
+			|  #{__('Connecting...')} 
+			input.postform-style.ml-5.di#updatepostsbutton(type='button' value=__('Update'))
+		if modview
+			include ../includes/actionfooter_manage.pug
+		else
+			include ../includes/actionfooter.pug

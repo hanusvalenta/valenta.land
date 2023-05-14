@@ -1,0 +1,39 @@
+/*lainchan*/
+:root {
+	--icon-color:invert(17%)sepia(89%)saturate(7057%)hue-rotate(2deg)brightness(93%)contrast(120%);
+	--alt-label-color: #333;
+	--alt-font-color: #bbb;
+	--background-top: #1E1E1E;
+	--background-rest: #1E1E1E;
+	--navbar-color: #333;
+	--post-color: #333;
+	--post-outline-color: #555;
+	--label-color: #333;
+	--box-border-color: #666;
+	--darken: #ffffff0f;
+	--highlighted-post-color: #32DD7220;
+	--highlighted-post-outline-color: #32DD7250;
+	--board-title: #32DD72;
+	--hr: #333;
+	--font-color: #bbb;
+	--name-color: #32DD72;
+	--capcode-color: #f00;
+	--subject-color: #b294bb;
+	--link-color: #fff;
+	--post-link-color: #fff;
+	--link-hover: #32DD72;
+	--accent-color: #666;
+	--input-borders: #666;
+	--input-color: #CCCCCC;
+	--input-background: #333;
+	--dice-color: darkorange;
+	--title-color: #d70000;
+	--greentext-color: #B8D962;
+	--pinktext-color:#E0727F;
+}
+.post-container, #float .post-container, .stickynav, .pages, #action-menu, .catalog-tile, #livetext, #threadstats, .collapse, .bottom-reply {
+	border-width: 1px;
+}
+.captcha {
+	filter: invert(90%);
+}

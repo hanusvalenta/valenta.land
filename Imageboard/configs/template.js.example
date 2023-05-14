@@ -1,0 +1,450 @@
+module.exports = {
+
+	globalAnnouncement: {
+		markdown: '',
+		raw: '',
+	},
+
+	secureCookies: true,
+
+	//check referrer to prevent some CSRF attack
+	refererCheck: false,
+
+	//list of allowed host for checking referrer
+	allowedHosts: [],
+
+	//header for country codes
+	countryCodeHeader: 'x-country-code',
+	//header for visitor IP
+	ipHeader: 'x-real-ip',
+
+	//data used in opengraph meta tags. used to generate link previews in e.g. discord, twitter, etc
+	meta: {
+		siteName: '',
+		url: ''
+	},
+
+	language: 'en-GB',
+
+	filters: [],
+	strictFiltering: false,
+	filterMode: 0,
+	filterBanDuration: 0,
+	filterBanAppealable: true,
+
+	//settings for captchas
+	captchaOptions: {
+		type: 'text',
+		generateLimit: 250,
+		font: 'default',
+		text: {
+			line: true,
+			wave: 0,
+			paint: 2,
+			noise: 0,
+		},
+		grid: {
+			falses: ['○','□','♘','♢','▽','△','♖','✧','♔','♘','♕','♗','♙','♧'],
+			trues: ['●','■','♞','♦','▼','▲','♜','✦','♚','♞','♛','♝','♟','♣'],
+			question: 'Select the solid/filled icons',
+			size: 4,
+			imageSize: 120,
+			iconYOffset: 15,
+			edge: 25,
+			noise: 0,
+		},
+		numDistorts: {
+			min: 2,
+			max: 3
+		},
+		distortion: 7,
+	},
+
+	/* dnsbl, will add a small delay for uncached requests. You could also install some 
+		kind of dns cache e.g. unbound to improve performance. DNSBL only checked for posting */
+	dnsbl: {
+		enabled: false,
+		blacklists: ['tor.dan.me.uk', 'zen.spamhaus.org'],
+		cacheTime: 3600 //in seconds, idk whats a good value
+	},
+
+	//disable file posting over anonymizers globally, overrides any board setting.
+	disableAnonymizerFilePosting: false,
+
+	//count anon posters (e.g. loki, tor .onion) as "users" in stats. if set to false, all .onion is counted as a single user. doesnt affect pph stat.
+	statsCountAnonymizers: true,
+
+	floodTimers: { //basic delays to stop flooding, in ms. 0 to disable
+		sameContentSameIp: 120000, //same message or any file from same ip
+		sameContentAnyIp: 30000, //same message or file from any ip
+		anyContentSameIp: 5000, //any post from the same ip
+	},
+
+	//block bypasses
+	blockBypass: {
+		enabled: false,
+		forceAnonymizers: true,
+		expireAfterUses: 50, //however many (attempted) posts per block bypass captcha
+		expireAfterTime: 86400000, //expiry in ms regardless if the limit was reached, default 1 day
+		bypassDnsbl: false,
+	},
+
+	/* delete files immediately rather than pruning later. usually disabled to prevent re-thumbnailing and processing commonly
+		uploaded files, but deleting immediately is better if you are concerned about "deleted" content not being immediately removed */
+	pruneImmediately: true,
+
+	//do not use
+	hashImages: false,
+
+	rateLimitCost: { //Cost out of 100 per minute e.g. cost of 25 means 4 per minute. Cost is separate for each.
+		captcha: 10,
+		boardSettings: 30,
+		editPost: 30,
+	},
+
+	//how many threads to show on overboard index view
+	overboardLimit: 20,
+	//how many threads to show on overboard catalog view
+	overboardCatalogLimit: 100,
+	//allow custom overboard (user pick what boards to show)
+	allowCustomOverboard: true,
+	//whether to show reverse links on overboard
+	overboardReverseLinks: true,
+
+	//how many hot threads show on homepage. 0 disabled
+	hotThreadsLimit: 5,
+	//how many replies the thread needs to be "hot"
+	hotThreadsThreshold: 10,
+	//max age of a hot thread, with a reducing score multiplier from 0-1 bias towards this date
+	hotThreadsMaxAge: 2629800000,
+
+	//default url format/links for archive and reverse image search links, %s will be replaced by the url
+	archiveLinksURL: 'https://archive.today/?run=1&url=%s',
+	reverseImageLinksURL: 'https://tineye.com/search?url=%s',
+
+	//cache templates in memory. disable only if editing templates and doing dev work
+	cacheTemplates: true,
+
+	//max wait time in ms for obtaining locks for saving files
+	lockWait: 3000,
+
+	//optionally prune modlog entries older than x days
+	pruneModlogs: 30,
+
+	//option to prune ips on posts older than x days
+	pruneIps: 0,
+
+	//dont store raw ips at all (in jschan), not counting webservers or whatever else.
+	dontStoreRawIps: false,
+
+	//enable the webring (also copy configs/webring.json.example -> configs/webring.json and edit)
+	enableWebring: false,
+
+	//extension for thumbnails
+	thumbExtension: '.webp',
+	//whether to animate gif thumbnails
+	animatedGifThumbnails: false,
+	//generate waveform thumbnails for audio
+	audioThumbnails: true,
+	/* if animatedGifThumbnails is true, use ffmpeg for better animated gif thumbnailing. Recommended.
+		requires ffmpeg >=4.3.x. You can install from debian testing repo, or compile from source. */
+	ffmpegGifThumbnails: true,
+
+	//max thumb dimensions (square) in px
+	thumbSize: 250,
+
+	//0-100 percent through a video to try taking video thumbnails from, to remedy black first frames or fade-ins
+	videoThumbPercentage: 5,
+
+	/* extra mime types for files to be uploaded as attachments (no thumbnails) e.g. text files/archives
+		NOTE: appropriate extensions will need to be added to nginx configuration, and uncommend the provided
+		"other files" section which includes an example configuration for .txt files to match this default config.
+		mime types and file extention does not always correspond exactly this cant be done automatically. */
+	otherMimeTypes: [
+		'text/plain',
+		'application/pdf',
+		'tegaki/replay',
+	],
+
+	//check the real mime type of uploaded files
+	checkRealMimeTypes: false,
+	//if checking real mime types, and the real type is unknown, allow it anyway
+	allowMimeNoMatch: false,
+
+	//default ban duration in ms if ban duration field is left blank (default value is 1 year)
+	defaultBanDuration: 31536000000,
+
+	//max number of quotes that will be linked in a post. 0 for unlimited (not recommended)
+	quoteLimit: 25,
+
+	//aply global filters more aggressively, trying against extra text that strips diacritics and some ZWS chars
+	strictFiltering: true,
+
+	//how many replies to show on index pages under each OP
+	previewReplies: 5,
+	stickyPreviewReplies: 5, //choose a different amount for sticky posts if desired
+
+	/* the fraction of threadLimit beyond which early404 prunes posts
+		e.g. 3 means after the first third, so if you had 6 pages,
+		anything after page 2 with less than early404Replies gets pruned */
+	early404Fraction: 3,
+	//how many replies a thread needs to not get removed by early404
+	early404Replies: 5,
+
+	//how many of the most recent newsposts to show on the homepage
+	maxRecentNews: 5,
+
+	//time for an account to be considered inactive
+	inactiveAccountTime: 7889400000,
+	//action for inactive accounts: nothing, forfeit staff positions, delete account
+	inactiveAccountAction: 0,
+
+	//action for handling abandoned boards (no board owner): nothing, lock, lock + unlist, delete board
+	abandonedBoardAction: 0,
+
+	/* filter filenames on posts and banners
+		false=no filtering
+		true=allow only A-Za-z0-9_-
+		regex=custom regex of what to replace e.g. /[^\w\s-]+/g */
+	filterFileNames: false,
+	/* replace spaces and multiple spaces with some character default _ for better filenames
+		(spaces dont belong in filenames) */
+	spaceFileNameReplacement: '_',
+
+	//options for code block highlighting in posts
+	highlightOptions: {
+
+		//subset of languages to allow.
+		languageSubset: [
+			'javascript',
+			'typescript',
+			'perl',
+			'js',
+			'c++',
+			'c',
+			'java',
+			'kotlin',
+			'php',
+			'h',
+			'csharp',
+			'bash',
+			'sh',
+			'zsh',
+			'python',
+			'ruby',
+			'css',
+			'html',
+			'json',
+			'golang',
+			'rust',
+			'aa',
+		],
+
+		//threshold below which auto language is ignored
+		threshold: 5
+
+	},
+
+	//uses names of css in gulp/res/css. if blank, all themes are enabled.
+	themes: [],
+	codeThemes: [],
+
+	//global limits for board settings
+	globalLimits:  {
+		threadLimit: { //number of threads, 10 per page
+			min: 10,
+			max: 200
+		},
+		replyLimit: { //number of replies to a thread, thread is locked after this limit is reached
+			min: 10,
+			max: 1000
+		},
+		bumpLimit: { //number of replies to a thread before it wont get bumped anymore
+			min: 10,
+			max: 1000
+		},
+		postFiles: { //number of files in a post
+			max: 5,
+		},
+		postFilesSize: {
+			max: 10485760, //in bytes, 10MB default
+			//width*height max number, 10000*10000 default, since square vs very wids vs very tall doesnt matter,
+			//just the raw number of pixels e.g. 4K 3840x2160=77414400, so we give PLENTY of headroom
+			imageResolution: 100000000,
+			videoResolution: 77414400,
+		},
+		bannerFiles: {
+			width: 300, //banner image max width in px
+			height: 100, //banner image max height in px
+			forceAspectRatio: true, //enforce 3:1 aspect ratio
+			max: 10, //number of banners uploadable in one request
+			total: 100, //max number of banners for a board
+		},
+		flagFiles: {
+			max: 10, //number of banners uploadable in one request
+			total: 100, //max number of flags for a board
+		},
+		assetFiles: {
+			max: 10, //number of assets uploadable in one request
+			total: 50, //max number of assets for a board
+		},
+		bannerFilesSize: { //in bytes, 10MB default
+			max: 10485760
+		},
+		assetFilesSize: { //in bytes, 10MB default
+			max: 10485760
+		},
+		flagFilesSize: { //in bytes, 1MB default
+			max: 1048576
+		},
+		/* NOTE: xFilesSize in bytes the amount of total data in form submission including
+			other fields like message, name, etc. Therefore a very long message would reduce the space left for files very slightly.
+			To counteract this, consider increasing them beyond your desired max filesize by a small margin */
+		fieldLength: { //max length of fields in some forms
+			//post form
+			name: 100,
+			email: 100,
+			subject: 100,
+			postpassword: 100,
+			message: 20000,
+			//reports/post actions
+			report_reason: 100,
+			ban_reason: 100,
+			log_message: 100,
+			//board creation
+			uri: 50,
+			boardname: 50,
+			description: 100,
+		},
+		multiInputs: {
+			//limits on certain requests that have multi-select. set any to 0 for unlimited
+			posts: { //post actions (report, delete, spoiler, ban, etc).
+				anon: 20, //separate for non-staff to prevent performance issues or abuse e.g. user mass self-deleting or reporting posts with single captcha
+				staff: 100, //but to still allow mass moderation for staff
+			},
+			//note: room for more limits here if they are needed for other checkbox forms in future
+		},
+		customCss: {
+			enabled: true, //allow custom css by board owners
+			max: 10000, //max number of characters to allow
+			strict: true, //enables filters to block certain strings in custom css
+			filters: [
+				'@',
+				'url(',
+			]
+		},
+		customPages: {
+			max: 10, //max number of custom pages per board
+			maxLength: 10000, //max number of characters to allow per page
+		}
+	},
+
+	//default frontend script settings
+	frontendScriptDefault: {
+		embedsEnabled: true, //show [embed] toggle next to embeddable video links
+		heightUnlimit: false, //allow images taller than window height
+		hideRecursive: true, //hide replies to hidden OPs
+		crispImages: false, //use crisp/pixelated image rendering
+		hideThumbnails: false, //hide thumbnails
+		nonColorIds: false, //dont color ids
+		alwaysShowSpoilers: false , //always reveal spoiler text
+		hidePostStubs: false, //hide hidden posts completely, dont even show it minimized
+		smoothScrolling: true, //smooth scrolling. annoying for chrome users on long threads
+		threadWatcher: true, //make threadwatcher visible
+		defaultVolume: 100, //default video/audio volume
+		loop: true, //looping video/audio
+		imageLoadingBars: true, //show loading bar for images, changes behaviour of right click save/open
+		live: true, //update threads automatically
+		scrollToPosts: false, //scroll to new posts
+		localTime: true, //show local time for posts
+		hour24Time: false, //show 24 hour time for posts
+		relativeTime: true, //show relative time i.e. "5 minutes ago" for posts
+		//note: relative time overrides other time options, they show on hover in the tooltip/"title" property
+		notificationsEnabled: false, //show notifications for new posts in a thread
+		notificationsYousOnly: true, //only show notifications for posts that quote you
+		showYous: true, //show (You) next to name on your posts, and quotes linking to your post
+		hideDeletedPostContent: false, //hide the message and files from marked deleted posts from websocket
+		tegakiWidth: 500, //default canvas size for tegaki drawings
+		tegakiHeight: 500,
+	},
+
+	//default board settings when a board is created
+	boardDefaults: {
+		language: 'en-GB',
+		theme: 'yotsuba-b',
+		codeTheme: 'ir-black',
+		sfw: false, //safe for work board
+		lockMode: 0, //board lock mode
+		fileR9KMode: 0, //enfore unique files, 0=off, 1=per thread, 2=whole board
+		messageR9KMode: 0, //enforce unique message, 0=off, 1=per thread, 2=whole board
+		unlistedLocal: false, //board hidden from on-site board list and frontpage
+		unlistedWebring: false, //board hidden from webring
+		captchaMode: 0, //0=disabled, 1=for threads, 2=for all posts
+		tphTrigger: 10, //numebr of threads in an hour before trigger action is activated
+		pphTrigger: 50, //number of posts in an hour before ^
+		//0=none, 1=captcha enable for threads, 2=captcha enable for all posts, 3=lock board
+		tphTriggerAction: 1,
+		pphTriggerAction: 2,
+		//0=dont change, 1=unlock board/disable captcha, 2=lock thread creation/enable captcha for thread creation
+		captchaReset: 0,
+		lockReset: 0,
+		forceAnon: false, //disable name and subject, only allow sage email
+		sageOnlyEmail: false, //only allow sage email
+		early404: true, //delete threads beyond the first 1/3 of pages with less than 5 replies
+		ids: false, //show per thread poster ID based on ip
+		geoFlags: false, //show geo flags, requires nginx setup
+		customFlags: false, //show custom flags
+		enableTegaki: true,
+		userPostDelete: true, //allow users to delete their posts
+		userPostSpoiler: true, //allow user to spoiler their post files
+		userPostUnlink: true, //alow user to unlink files fomr their post
+		reverseImageSearchLinks: false, //show imgops or similar
+		archiveLinks: false, //show external archive link
+		threadLimit: 200,
+		replyLimit: 1000,
+		bumpLimit: 500,
+		maxFiles: 5,
+		forceReplyMessage: false,
+		forceReplyFile: false,
+		forceThreadMessage: false,
+		forceThreadFile: false,
+		forceThreadSubject: false,
+		disableReplySubject: false,
+		hideBanners: false,
+		minThreadMessageLength: 0,
+		minReplyMessageLength: 0,
+		maxThreadMessageLength: 20000,
+		maxReplyMessageLength: 20000,
+		defaultName: 'Anon',
+		customCSS: null,
+		blockedCountries: [], //2 char ISO country codes to block
+		disableAnonymizerFilePosting: false,
+		filters: [], //words/phrases to block
+		filterMode: 0, //0=nothing, 1=prevent post, 2=auto ban
+		filterBanDuration: 0, //duration (in ms) to ban if filter mode=2
+		deleteProtectionAge: 0, //prevent non-staff OP from deleting their thread if it older than this age in ms
+		deleteProtectionCount: 0, //prevent non-staff op deleting their thread if it has more than this many replies
+		strictFiltering: false,
+		announcement: {
+			raw: null,
+			markdown: null
+		},
+		allowedFileTypes: { //enable different types of files to be posted
+			animatedImage: true,
+			image: true,
+			video: true,
+			audio: true,
+			other: false
+		}
+	},
+
+	following: [],
+	blacklist: [],
+	logo: [],
+	proxy: {
+		enabled: false,
+		address: ''
+	}
+
+
+};

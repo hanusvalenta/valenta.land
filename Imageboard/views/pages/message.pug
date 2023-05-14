@@ -1,0 +1,25 @@
+extends ../layout.pug
+
+block head
+	title #{title}
+	if redirect
+		meta(http-equiv="refresh" content=`3;url=${redirect}`)
+
+block content
+	h1 #{title}
+	ul
+		if message
+			li #{message}
+		if error
+			li #{error}
+		if messages
+			each msg in messages
+				li #{msg}
+		if errors
+			each error in errors
+				li #{error}
+	if link
+		div
+			a.button(href=link.href target='_blank') #{link.text}
+	if redirect
+		p #{__('You will be redirected shortly.')} #[a(href=redirect) #{__('Click here if you are not redirected automatically.')}]

@@ -1,0 +1,36 @@
+/*miku*/
+:root {
+	--icon-color:invert(17%)sepia(89%)saturate(7057%)hue-rotate(2deg)brightness(93%)contrast(120%);
+	--alt-label-color: #B6DDDE;
+	--alt-font-color: black;
+	--background-top: #2e99cc70;
+	--background-rest: #D2FFEE;
+	--navbar-color: #B6DDDE;
+	--post-color: #B6DDDE;
+	--post-outline-color: #8FCCCD;
+	--label-color: #B6DDDE;
+	--box-border-color: #8FCCCD;
+	--darken: #00000010;
+	--highlighted-post-color: #a9d8ff;
+	--highlighted-post-outline-color: #8FCCCD;
+	--board-title: #800000;
+	--hr: #B7D9C5;
+	--font-color: black;
+	--name-color: #117743;
+	--capcode-color: #f00;
+	--subject-color: #117743;
+	--link-color: #00637B;
+	--post-link-color: #d00;
+	--link-hover: #d00;
+	--accent-color: #B6DDDE;
+	--input-borders: #a9a9a9;
+	--input-color: #000;
+	--input-background: white;
+	--dice-color: darkorange;
+	--title-color: #d70000;
+	--greentext-color: #789922;
+	--pinktext-color:#E0727F;
+}
+.post-container, #float .post-container, .stickynav, .pages, #action-menu, .catalog-tile, #livetext, #threadstats, .collapse, .bottom-reply {
+	border-width: 0 1px 1px 0;
+}

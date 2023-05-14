@@ -1,0 +1,25 @@
+case captchaOptions.type
+	when 'google'
+		div(class='g-recaptcha' data-sitekey=`${googleRecaptchaSiteKey}` data-theme='dark' data-size='compact' data-callback='recaptchaCallback')
+		noscript #{__('Please enable JavaScript to solve the captcha.')}
+	when 'hcaptcha'
+		div(class='h-captcha' data-sitekey=`${hcaptchaSiteKey}` data-theme='dark' data-size='compact' data-callback='recaptchaCallback')
+		noscript #{__('Please enable JavaScript to solve the captcha.')}
+	when 'text'
+		noscript.no-m-p
+			iframe.captcha(src='/captcha.html' 'width=210' height='80' scrolling='no' loading='lazy')
+		.jsonly.captcha(style='display:none;')
+		input.captchafield(type='text' name='captcha' autocomplete='off' placeholder=__('Captcha text') pattern='.{6}' required title=__n('%s characters', 6))
+	when 'grid'
+	when 'grid2'
+		span.text-center #{captchaOptions.grid.question}
+		.catalog
+			noscript.no-m-p
+				iframe.captcha(src='/captcha.html' width='150' height='150' scrolling='no' loading='lazy')
+			.jsonly.captcha(style='display:none')
+			.captchafield.noselect
+				- for(let i = 0; i < captchaOptions.grid.size**2; i++) {
+				label.captchachecklabel
+					input(type='checkbox' name='captcha' value=i)
+					span.captchacheckbox
+				- }

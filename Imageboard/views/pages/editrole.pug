@@ -1,0 +1,18 @@
+extends ../layout.pug
+include ../mixins/globalmanagenav.pug
+
+block head
+	title #{__('Edit Role')}
+
+block content
+	h1.board-title #{__('Global Management')}
+	br
+	+globalmanagenav('roles', true)
+	hr(size=1)
+	h4.mv-5 #{__('Edit role %s', __(roleNameMap[rolePermissions.base64]))}
+	- const jsonPermissions = rolePermissions.toJSON();
+	.form-wrapper.flexleft
+		form(action=`/forms/global/editrole` method='POST')
+			input(type='hidden' name='_csrf' value=csrf)
+			input(type='hidden' name='roleid' value=role._id)
+			include ../includes/globalpermissionsform.pug

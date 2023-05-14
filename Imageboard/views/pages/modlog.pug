@@ -1,0 +1,41 @@
+extends ../layout.pug
+include ../mixins/boardheader.pug
+include ../mixins/boardnav.pug
+include ../mixins/postlink.pug
+
+block head
+	title /#{board._id}/ - #{__('Logs for %s', startDate.toDateString())}
+
+block content
+	+boardheader(__('Logs'))
+	br
+	include ../includes/stickynav.pug
+	.pages
+		+boardnav('logs', true, true)
+	hr(size=1)
+	.table-container.flex-center.mv-10.text-center
+		table
+				tr
+					th #{__('Date')}
+					th #{__('User')}
+					th #{__('Actions')}
+					th #{__('Posts')}
+					th #{__('Log Message')}
+				for log in logs
+					tr
+						- const logDate = new Date(log.date);
+						td: time.reltime(datetime=logDate.toISOString()) #{logDate.toLocaleString(pageLanguage, {hourCycle:'h23'})}
+						- const logUser = log.user || __('Unregistered User');
+						td(class=(!log.showUser ? 'em' : '')) #{log.showUser ? logUser : __('Hidden User')}
+						td #{log.actions.map(a => __(a))}
+						td
+							if log.showLinks
+								for postLink in log.postLinks
+									+postlink(log, postLink, false)
+									|   
+							else
+								| #{log.postLinks.map(l => l.postId)}
+						td #{log.message || '-'}
+	hr(size=1)
+	.pages
+		+boardnav('logs', true, true)

@@ -1,0 +1,71 @@
+extends ../layout.pug
+include ../mixins/globalmanagenav.pug
+
+block head
+	title Accounts
+
+block content
+	h1.board-title #{__('Global Management')}
+	br
+	+globalmanagenav('accounts')
+	hr(size=1)
+	.form-wrapper.flexleft
+		h4.no-m-p Search:
+		form.form-post.mv-5(action=`/globalmanage/accounts.html` method='GET')
+			input(type='hidden' value=page)
+			.row
+				.label #{__('Username')}
+				input(type='text' name='username' value=username)
+			.row
+				.label #{__('Board URI')}
+				input(type='text' name='uri' value=uri)
+			input(type='submit', value=__('Filter'))
+		h4.mv-5 #{__('Accounts')}:
+		if accounts && accounts.length > 0
+			form.form-post.nogrow(action=`/forms/global/deleteaccounts` method='POST' enctype='application/x-www-form-urlencoded')
+				input(type='hidden' name='_csrf' value=csrf)
+				.table-container.flex-left.text-center
+					table
+						tr
+							th
+							th #{__('Username')}
+							th #{__('Own Boards')}
+							th #{__('Staff Boards')}
+							th #{__('Last Active')}
+							th #{__('Role')}
+							th #{__('Permissions')}
+						for account in accounts
+							tr
+								td: input(type='checkbox', name='checkedaccounts' value=account._id)
+								td #{account._id}
+								td
+									if account.ownedBoards.length > 0
+										for b in account.ownedBoards
+											a(href=`/${b}/index.html`) /#{b}/
+											|  
+									else
+										| -
+								td
+									if account.staffBoards.length > 0
+										for b in account.staffBoards
+											a(href=`/${b}/index.html`) /#{b}/
+											|  
+									else
+										| -		
+								td
+									if account.lastActiveDate
+										time.reltime(datetime=account.lastActiveDate.toISOString()) #{account.lastActiveDate.toLocaleString(pageLanguage, {hourCycle:'h23'})}
+									else
+										| -		
+								td #{roleNameMap[account.permissions.toString('base64')] || __('Custom')}
+								td
+									if account._id !== user.username
+										a(href=`/globalmanage/editaccount/${account._id}.html`) [#{__('Edit')}]
+									else
+										a(href=`/mypermissions.html`) [#{__('View')}]
+				.pages.mv-5
+					include ../includes/pages.pug
+				h4.mv-5 #{__('Delete Selected')}:
+				input(type='submit', value=__('Delete'))
+		else
+			p #{__('No results.')}

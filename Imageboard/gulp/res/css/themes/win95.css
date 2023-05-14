@@ -1,0 +1,181 @@
+:root {
+	--icon-color: invert(17%) sepia(89%) saturate(7057%) hue-rotate(2deg) brightness(93%) contrast(120%);
+	--darken: #ffffff10;
+	--board-title: white;
+	--hr: #282a2e;
+	--dice-color: darkorange;
+	--title-color: #d70000;
+	--greentext-color: green;
+	--pinktext-color: #E0727F;
+	--alt-label-color: darkblue;
+	--alt-font-color: white;
+	--background-top: #008080;
+	--background-rest: #008080;
+	--navbar-color: #c0c0c0;
+	--post-color: #c0c0c0;
+	--post-outline-color: #c0c0c0;
+	--label-color: transparent;
+	--box-border-color: transparent;
+	--highlighted-post-color: #c0c0c0;
+	--highlighted-post-outline-color: #c0c0c0;
+	--font-color: black;
+	--post-link-color: blue;
+	--link-color: #fffff50;
+	--link-hover: #555;
+	--accent-color: grey;
+	--input-borders: #111;
+	--input-color: black;
+	--input-background: white;
+	--name-color: #ddd;
+	--capcode-color: #f00;
+	--subject-color: #ddd;
+}
+.flag {
+	image-rendering:pixelated;
+}
+.post-container:not(.op), #float .post-container, .stickynav, .pages, #action-menu, .catalog-tile, #livetext, #threadstats, .navbar, #postform, .op, table, .board-banner, .filelabel, .modal, .collapse, .bottom-reply {
+	border: 2px outset lightgray!important;
+}
+input[type=button],
+input[type=file],
+input[type=number],
+input[type=password],
+input[type=range],
+input[type=text],
+select,
+textarea,
+.postform-style,
+.code {
+	 border:2px inset var(--post-color);
+}
+#postform {
+	padding: 2px
+}
+.nav-item {
+	line-height: 1.75em!important;
+	margin: 2px;
+}
+.nav-item, .close, input[type=submit], .filelabel {
+	color:black;
+	background: transparent;
+	border: 2px outset lightgray;
+}
+.close {
+	font-weight: bold
+}
+.navbar a {
+	color:black;
+}
+.anchor:target+.post-container .post-info, .post-container.highlighted .post-info, .post-container.hoverhighlighted .post-info, .anchor:target+table tbody tr th	{
+	background: darkblue!important;
+	color: white!important;
+}
+.op, .board-banner {
+	background: var(--post-color)!important;
+}
+.navbar {
+	top:unset!important;
+	bottom: -3px;
+}
+.navbar a:first-of-type::before {
+	content:'';
+	position:absolute;
+	background: url(/css/themes/assets/win95home.png);
+	background-size: contain;
+	height: 1.75em;
+	width: 1.75em;
+	left: 7px;
+}
+.navbar a:first-of-type {
+	padding-left: 30px
+}
+.stickynav {
+	top: 5px;
+	bottom: unset
+}
+main {
+	margin: 0;
+}
+table {
+	background: var(--post-color);
+	border-spacing:0;
+}
+.post-info, #postform-dragHandle, th:not(.alt){
+	font-weight: bold;
+	color: #ddd;
+	background: #808080!important;
+}
+th a {
+	color: #ddd!important;
+}
+hr {
+	border-top: 2px ridge var(--post-outline-color);
+}
+.post-info {
+	margin: -6px -6px 0px;
+	padding: 3px 5px 3px 3px;
+}
+.board-description {
+	color:var(--board-title)
+}
+.modal {
+	padding:3px;
+}
+input[type=submit], input[type=submit], label[for=file] {
+	background: var(--post-color)!important;
+}
+.footer {
+	padding-bottom: 3em;
+}
+@media only screen and (max-width:600px) {
+	.nav-item {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+.nav-item .rainbow {
+	display: inline;
+}
+.catalog-thumb {
+	margin-top:5px;
+}
+.op, .op .post-info {
+	background:none!important;
+}
+.op .post-info {
+	color:white;
+}
+.op .post-name {
+	color:white;
+}
+.op.post-subject {
+    color: white!important;
+}
+.op {
+	border:2px outset transparent!important;
+	--greentext-color:#3ae03a;
+	--font-color:white;
+	--subject-color: white;
+	color:var(--font-color);
+}
+.anchor:target+.post-container.op {
+	--greentext-color:unset;
+	--font-color:black;
+}
+.op .postmenu {
+	border-left-color: white;
+}
+.postmenu {
+	color: black;
+	border-left-color: #ddd;
+}
+.box-wrap, .tabs li a {
+	border: 2px solid var(--post-outline-color);
+	background: var(--post-color)!important;
+}
+.box-wrap .col {
+	background: var(--post-color)!important;
+}
+#tab-10:target a[href="#tab-10"], #tab-1:target a[href="#tab-1"], #tab-2:target a[href="#tab-2"], #tab-3:target a[href="#tab-3"], #tab-4:target a[href="#tab-4"], #tab-5:target a[href="#tab-5"], #tab-6:target a[href="#tab-6"], #tab-7:target a[href="#tab-7"], #tab-8:target a[href="#tab-8"], #tab-9:target a[href="#tab-9"] {
+  border: 2px inset var(--post-color);
+}

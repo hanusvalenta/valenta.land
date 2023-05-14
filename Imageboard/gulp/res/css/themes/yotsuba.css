@@ -1,0 +1,41 @@
+/*yotsuba b*/
+:root {
+	--icon-color:invert(17%)sepia(89%)saturate(7057%)hue-rotate(2deg)brightness(93%)contrast(120%);
+	--alt-label-color: #800;
+	--alt-font-color: #fff;
+	--background-top: #fed6af90;
+	--background-rest: #ffe;
+	--navbar-color: #f0e0d6;
+	--post-color: #f0e0d6;
+	--post-outline-color: #d9bfb7;
+	--label-color: #fca;
+	--box-border-color: #000;
+	--darken: #00000010;
+	--highlighted-post-color: #f0c0b0;
+	--highlighted-post-outline-color: #d99f91;
+	--board-title: #af0a0f;
+	--hr: #D9BFB7;
+	--font-color: #800000;
+	--name-color: #800000;
+	--capcode-color: #f00;
+	--subject-color: #f00;
+	--link-color: #800;
+	--post-link-color: navy;
+	--link-hover: #f00;
+	--accent-color: #800000;
+	--input-borders: #a9a9a9;
+	--input-color: #000;
+	--input-background: white;
+	--dice-color: darkorange;
+	--title-color: #d70000;
+	--greentext-color: #789922;
+	--pinktext-color:#E0727F;
+}
+
+.post-container, #float .post-container, .stickynav, .pages, #action-menu, .catalog-tile, #livetext, #threadstats, .collapse, .bottom-reply {
+	border-width: 0 1px 1px 0;
+}
+
+tr, tr:nth-child(2n+1) {
+    background: #fff;
+}

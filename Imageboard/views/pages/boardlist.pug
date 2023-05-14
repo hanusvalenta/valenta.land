@@ -1,0 +1,68 @@
+extends ../layout.pug
+include ../mixins/boardtable.pug
+
+block head
+	title #{__('Board List')}
+
+block content
+	h1.board-title #{__('Board List')}
+	.flexcenter.mv-10
+		form.form-post(action='/boards.html' method='GET')
+			input(type='hidden' value=page)
+			.row.wrap.sb
+				div(class=`col${enableWebring ? ' mr-5' : ''}`)
+					.row
+						.label #{__('Search')}
+						input(type='text' name='search' value=search placeholder=__('URI or tags'))
+					.row
+						.label #{__('Sort')}
+						select(name='sort')
+							option(value='popularity') #{__('Popularity')}
+							option(value='activity' selected=query.sort === 'activity') #{__('Latest Activity')}
+					.row
+						.label #{__('Order')}
+						select(name='direction')
+							option(value='desc') #{__('Descending')}
+							option(value='asc' selected=query.direction === 'asc') #{__('Ascending')}
+					if enableWebring
+						.row
+							.label #{__('Local First')}
+							label.postform-style.ph-5
+								input(type='checkbox', name='local_first', value='true' checked=localFirst)
+				if enableWebring
+					.col
+						.row
+							.label #{__('Sites')}
+							select(name='sites' size='5' multiple)
+								optgroup(label=__('Shown'))
+									each site in shown
+										option(value=site selected=true) #{site}
+								optgroup(label=__('Not Shown'))
+									each site in notShown
+										option(value=site) #{site}
+			input(type='submit', value=__('Filter'))
+	if boards && boards.length > 0
+		+boardtable(true, true)
+			each board in boards
+				- const path = board.webring ? board.path : `/${board._id}/index.html`;
+				tr
+					td 
+						span.left
+							if board.webring === true
+								span.help(title=__('Webring')) &#x1F517;
+								|  
+							if board.settings.sfw === true
+								span.help(title=__('SFW')) &#x1F4BC;
+								|  
+						a(href=path) #{board.webring ? board.siteName : ''} /#{board.webring ? board.uri : board._id}/ - #{board.settings.name}
+					td #{board.settings.description || '-'}
+					td #{board.pph}
+					td #{board.ppd != null ? board.ppd : '-'}
+					td #{board.ips}
+					td #{board.sequence_value-1}
+					if board.lastPostTimestamp
+						td(style=`background-color: ${board.lastPostTimestamp.color}`) #{board.lastPostTimestamp.text}
+					else
+						td -
+	.pages.text-center.mt-5.mv-0
+		include ../includes/pages.pug

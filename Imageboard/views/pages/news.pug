@@ -1,0 +1,14 @@
+extends ../layout.pug
+include ../mixins/newspost.pug
+
+block head
+	title #{__('News')}
+
+block content
+	h1.board-title #{__('News')}
+	if news.length === 0
+		p.text-center #{__('No news.')}
+	else 
+		include ../includes/stickynav.pug
+		each post in news
+			+newspost(post)

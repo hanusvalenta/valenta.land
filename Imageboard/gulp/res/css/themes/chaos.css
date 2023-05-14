@@ -1,0 +1,79 @@
+:root {
+	--icon-color:invert(17%)sepia(89%)saturate(7057%)hue-rotate(2deg)brightness(93%)contrast(120%);
+	--alt-label-color:#001010;
+	--alt-font-color:#00CCCC;
+	--background-top:#000505;
+	--background-rest:#000505;
+	--navbar-color:#001010;
+	--post-color:#001010;
+	--post-outline-color:#B7C5D9;
+	--label-color:#001010;
+	--box-border-color:#00AAAA;
+	--darken:#00000010;
+	--highlighted-post-color:#003030;
+	--highlighted-post-outline-color:#FF0000;
+	--board-title:#af0a0f;
+	--hr:lightgray;
+	--font-color:#00CCCC;
+	--name-color:#FF0000;
+	--capcode-color:#f00;
+	--subject-color:#FF0000;
+	--link-color:#FF0000;
+	--post-link-color:#FF0000;
+	--link-hover:#d00;
+	--accent-color:#00CCCC;
+	--input-borders:#00AAAA;
+	--input-color:#00CCCC;
+	--input-background:#000505;
+	--dice-color:darkorange;
+	--title-color:#d70000;
+	--greentext-color:#FF0000;
+	--pinktext-color:#E0727F;
+}
+#livetext,
+#threadstats,
+#float	.post-container,
+.catalog-tile,
+.live,
+.modal,
+.pages,
+.collapse,
+.bottom-reply,
+.post-container,
+.stickynav,
+#action-menu,
+input[type=file],
+input[type=number],
+input[type=password],
+input[type=submit],
+input[type=text],
+select,
+textarea,
+.label,
+.postform-style,
+.close,
+table,
+.board-banner,
+#postform {
+	border:	1px	dotted;
+}
+hr {
+	border-top:	1px	dotted;
+}
+.navbar {
+	border-bottom:	1px	dotted;
+}
+a .post-name:hover,
+a:hover {
+	background:var(--link-hover)!important;
+	color:black!important;
+}
+.anchor:target + .post-container .post-info, .post-container.highlighted .post-info {
+	border-bottom: none;
+}
+@media only screen and (max-width: 600px) {
+	.post-info{
+		background: none;
+		border-bottom: none;
+	}
+}
