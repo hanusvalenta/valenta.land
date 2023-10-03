@@ -45,11 +45,13 @@ Paradox Fermiho zdůrazňuje záhadný rozpor mezi vysokou pravděpodobností ex
 
 # Podmínky pro život
 
-![bg right](zelvuska.webp)
+![bg right](lol.jpg)
 
 ---
 
 # Extrémní prostředí na Zemi
+
+![bg right](zelvuska.webp)
 
 ---
 
