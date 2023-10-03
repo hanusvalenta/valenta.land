@@ -21,65 +21,41 @@ Opakování dělení
 ---
 # Základní informace
 
-* Život
+* 
 
-![bg right](.jpg)
-
----
-
-# Fermiho paradox
-
-* Kolonie
-* Množství
-* Dělení
-* Rozpoznávání stáří hornin
-
-![bg right](graptopodi.jpg)
+![bg right](AlienProof.jpg)
 
 ---
 
-# Lilijice
+## Fermiho paradox
+
+Paradox Fermiho zdůrazňuje záhadný rozpor mezi vysokou pravděpodobností existence pokročilého mimozemského života a absencí konkrétního důkazu.
+
+![bg right](zuck.jpg)
+
+---
+
+# Historické Perspektivy
 
 * Zachování dodnes
 
-![bg right](lilijice.jpg)
+![bg right](ufo.webp)
 
 ---
 
-# Orthoceras
+# Podmínky pro život
 
-* Velikost
-
-![bg right](Orthoceras.jpg)
+![bg right](zelvuska.webp)
 
 ---
 
-# Meganeura
-
-* Rozpětí křídel
-
-![bg right](Meganeura.jpg)
+# Extrémní prostředí na Zemi
 
 ---
 
-# Pterygotus
+# Závěr a diskuze
 
-* Výskyt
-* Délka
-* Význam v paleontologii
-* Vrchol potravní pyramidy
+* můj názor
+* myslíte si vy že existují mimozemšťané?
 
-![bg right](Pterygotus.jpg)
-
----
-
-## Anomalocaris
-
-* Neobvyklost
-* Problémy při jeho klasifikaci
-* Lovec trilobitů
-* Nekompletní nálezy
-
-![bg right](Anomalocaris.jpg)
-
----
+![bg right](IWantToBelieve.jpg)
