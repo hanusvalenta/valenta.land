@@ -8,20 +8,25 @@ class: invert
 
 # **Existuje mimozemský život?**
 
-(mimozemšťané)
+důležité zmínit!
+
+UFO - unidentified flying object
+UAP - Unidentified Aerial Phenomena
 
 ---
 
 # Základní otázky
 
-Opakování dělení
-
-* Perm (před 200 milióny let)
+* Jaká je pravděpodobnost vzniku mimozemského života?
+* Jaká je šance našeho styku s ním?
+* Jak by takový život vypadal?
 
 ---
 # Základní informace
 
-* 
+* Fermiho paradox
+* Historické Perspektivy
+* Podmínky pro život
 
 ![bg right](AlienProof.jpg)
 
@@ -37,27 +42,32 @@ Paradox Fermiho zdůrazňuje záhadný rozpor mezi vysokou pravděpodobností ex
 
 # Historické Perspektivy
 
-* Zachování dodnes
+* Starověké Civilizace
+* Východní Náboženství
+* Středověká Myslitelství
+* 19 a 20 Století
+* Moderní Doba
 
 ![bg right](ufo.webp)
 
 ---
 
-# Podmínky pro život
+## Podmínky pro život
 
-![bg right](lol.jpg)
-
----
-
-# Extrémní prostředí na Zemi
+* Voda
+* Přítomnost Organických Molekul
+* Ochrana Před Přílišnou Radiací
+* Dostatečná Doba Pro Vznik a Vývoj Života
 
 ![bg right](zelvuska.webp)
 
 ---
 
-# Závěr a diskuze
+## Závěr a diskuze
 
 * můj názor
 * myslíte si vy že existují mimozemšťané?
+* Ethické a Filosofické Implikace
+* Kontext Pro Naši Existenci
 
 ![bg right](IWantToBelieve.jpg)
