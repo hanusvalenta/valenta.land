@@ -71,3 +71,11 @@ Paradox Fermiho zdůrazňuje záhadný rozpor mezi vysokou pravděpodobností ex
 * Kontext Pro Naši Existenci
 
 ![bg right](IWantToBelieve.jpg)
+
+---
+
+# Zdroje
+
+- https://www.nasa.gov/science-research/planetary-science/do-aliens-exist-we-asked-a-nasa-scientist-episode-5/
+- https://www.newsweek.com/did-government-confirm-aliens-exist-ufo-congress-hearings-1817251
+- https://www.bbc.co.uk/programmes/articles/3yhCprN6RZT6M3NvWpNP3Ym/10-reasons-why-aliens-probably-exist-but-won-t-be-visiting-us-anytime-soon
