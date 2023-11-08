@@ -11,7 +11,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
 </head>
 <body>
-    <embed loop="true" src="foolin.wav" hidden="true" type="video/quicktime"></embed>
+    <audio autoplay loop>
+        <source src="foolin.wav" type="audio/wav"/>
+    </audio>
 
     <div class="menu">
         <a href="#intro">Introduction</a>
@@ -108,6 +110,7 @@
                     .addTo(controller);
             </script>
         </div>
+        
         <div class="media">
             <img src="image0.jpg">
             <img src="image1.webp">
