@@ -41,10 +41,6 @@ body {
     color: var(--white);
 }
 
-a {
-
-}
-
 h1 {
     color: var(--light);
     font-size: 10vh;
