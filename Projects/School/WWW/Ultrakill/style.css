@@ -4,9 +4,14 @@
     --mid: #950101;
     --light: #FF0000;
     --white: #d7e8ff;
+    --gray: #a5a5a5;
     --backgroundDark: #190505;
 
     --textMargin: 4vh;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 @font-face {
@@ -55,8 +60,20 @@ h1 {
 }
 
 p {
-    color: var(--white);
+    color: var(--gray);
     font-size: 3vh;
+}
+
+p:hover {
+    color: var(--white);
+}
+
+a {
+    color: var(--light);
+}
+
+a:hover {
+ color: var(--white);
 }
 
 p2 {
