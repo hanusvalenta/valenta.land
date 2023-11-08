@@ -1,0 +1,121 @@
+:root {
+    --black: #000000;
+    --dark: #3D0000;
+    --mid: #950101;
+    --light: #FF0000;
+    --white: #d7e8ff;
+    --backgroundDark: #190505;
+
+    --textMargin: 4vh;
+}
+
+@font-face {
+    font-family: VCR;
+    src: url(VCR_OSD_MONO_1.001.ttf);
+}
+
+body {
+    background-color: var(--backgroundDark);
+    font-family: VCR;
+}
+
+.menu {
+    position: fixed;
+    height: 30vh;
+    width: 18vh;
+    background-color: var(--mid);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    outline-style: dashed;
+    border-color: var(--dark);
+    opacity: 90%;
+}
+
+.menu a {
+    font-size: 2vh;
+    color: var(--white);
+}
+
+a {
+
+}
+
+h1 {
+    color: var(--light);
+    font-size: 10vh;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: var(--textMargin);
+    margin-right: var(--textMargin);
+}
+
+p {
+    color: var(--white);
+    font-size: 3vh;
+}
+
+p2 {
+    color: var(--white);
+    font-size: 3vh;
+}
+
+p3 {
+    color: var(--white);
+    font-size: 3vh;
+}
+
+li {
+    color: var(--white);
+    font-size: 3vh;
+}
+
+.block {
+    width: 100%;
+    height: 5vh;
+}
+
+.collumn {
+    display: flex;
+    margin-top: 10vh;
+}
+
+.mainImg {
+    box-shadow: 0 0 10vh 6vh var(--backgroundDark) inset;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.media {
+    display: flex;
+    flex-direction: column;
+}
+
+.media img {
+    max-width: 25vh;
+    margin: var(--textMargin);
+}
+
+.meme {
+    opacity: 0;
+    width: 100%;
+    height: 2vh;
+}
+
+.meme:hover {
+    opacity: 1;
+    width: auto;
+    height: auto;
+}
