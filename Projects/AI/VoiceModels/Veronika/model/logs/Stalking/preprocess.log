@@ -1,0 +1,24 @@
+start preprocess
+['trainset_preprocess_pipeline_print.py', 'C:\\Users\\jenda\\OneDrive\\Dokumenty\\waws\\new', '40000', '16', 'C:\\Programs\\RVC-beta-v2-0618/logs/Stalking', 'False']
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 14.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 2.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 12.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 18.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 13.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 20.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 16.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 15.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 19.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 22.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 17.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 1.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 3.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 10.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 21.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 9.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 6.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 7.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 8.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 4.wav->Suc.
+C:\Users\jenda\OneDrive\Dokumenty\waws\new/untitled - Track 5.wav->Suc.
+end preprocess
