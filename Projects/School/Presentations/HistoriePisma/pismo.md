@@ -37,6 +37,8 @@ Valenta
 
    - Ideogramy
 
+   ![bg right](petroglif.jpeg)
+
 [//]: # (Piktogramy: Obrazové znázornění objektů, které slouží ke komunikaci. Petroglyfy: Vyryté symboly nebo obrazy na kamenných površích Geoglyfy: Zeměpisné tvary nebo symboly vytvořené na krajině. Ideogramy: Symboly reprezentující myšlenky nebo koncepty.)
 
 ---
@@ -57,11 +59,27 @@ Valenta
 
 ---
 
+# Dělení hieroglifů:
+
+- Logogramy
+
+- Fonetické znaky
+
+- Determinativy
+
+- Kombinace
+
+![bg right](logogram.jpeg)
+
+---
+
 - Mezopotámie: Klínové písmo v Sumeru a Akkadu.
 
 - Řím a Řecko: Latinka a řecká abeceda.
 
 - Středověká Evropa: Rozvoj unciálového a karolinského písma.
+
+![bg right](gotica.png)
 
 ---
 
