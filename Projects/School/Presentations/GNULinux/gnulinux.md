@@ -16,37 +16,48 @@ Valenta Zahradník Novotný Zapletal Janoštík
 
 # Úvod do Linuxu:
 
-Definice: Linux je jádro operačního systému s otevřeným kódem, poprvé vytvořené Linusem Torvaldsem v roce 1991.
-Klíčové charakteristiky: Unixový, víceuživatelský, multitasking a přenosný.
-Důležitost: Široce používán ve serverech, vestavěných systémech a jako alternativní desktopový operační systém.
+- Definice
+- Linus a Stallman
+- Klíčové charakteristiky
+- Důležitost
+
+![bg right](linus.png)
 
 ---
 
 # Otevřený zdroj a komunita:
 
-Filozofie otevřeného zdroje: Linux je distribuován pod licencí GNU General Public License (GPL), podporující spolupráci a sdílení zdrojového kódu.
-Komunitní vývoj: Globální komunita vývojářů a nadšenců přispívá k vývoji a zdokonalování jádra Linuxu a přidruženého softwaru.
+- Filozofie otevřeného zdroje
+- Komunitní vývoj
+
+![bg right](open.png)
 
 ---
 
 # Rozmanitost distribucí:
 
-Přehled distribucí: Linux má různé distribuce (distros), které pokrývají různé potřeby, jako například Ubuntu, Fedora, Debian, Arch Linux a další.
-Přizpůsobení: Uživatelé si mohou vybrat distribuci podle preferencí pro stabilitu, nejnovější funkce, snadnost používání nebo specifické účely, jako je správa serverů.
+- Přehled distribucí
+- Přizpůsobení
+
+![bg right](TuxFlat.png)
 
 ---
 
 # Příkazový řádek (CLI):
 
-Silný shell: Linux nabízí robustní příkazový řádek, který umožňuje uživatelům interagovat se systémem pomocí příkazů.
-Skriptování a automatizace: CLI usnadňuje automatizaci prostřednictvím skriptů, zvyšující efektivitu a produktivitu.
+- Silný shell
+- Skriptování a automatizace
+
+![bg right](stallman.jpeg)
 
 ---
 
 # Bezpečnost a stabilita:
 
-Bezpečnostní model: Linux je známý svými robustními bezpečnostními funkcemi, včetně oprávnění uživatelů, SELinux a preventivního přístupu k bezpečnosti.
-Stabilita: Systémy Linuxu jsou známy svou stabilitou, často běžící po dlouhou dobu bez potřeby restartu.
+- Bezpečnostní model
+- Stabilita
+
+![bg right](tux.png)
 
 ---
 
@@ -61,8 +72,8 @@ Rozlišování závislostí: Správci balíčků se zabývají závislostmi, zje
 
 # Aplikace pro servery:
 
-Webové servery: Linux dominuje ve vedení webových serverů, přičemž Apache, Nginx a Lighttpd jsou oblíbenými volbami.
-Databázové servery: MySQL, PostgreSQL a MongoDB jsou běžně používány na Linuxu pro správu databází.
+- Webové servery
+- Databázové servery
 
 ---
 
