@@ -114,6 +114,16 @@ Zapletal Janoštík
 - Všestrannost
 - Trvající inovace
 
+![bg right](meme0.png)
+
+---
+
+# Otázky pro ostatní OS
+
+
+
+![bg right](meme.png)
+
 ---
 
 ![bg](evangelionEndOfPresentation.webp)
