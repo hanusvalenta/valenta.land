@@ -10,7 +10,8 @@ class: invert
 
 ###### A proč jsme ve všem nejlepší.
 
-Valenta Zahradník Novotný Zapletal Janoštík
+Valenta Zahradník Novotný 
+Zapletal Janoštík
 
 ---
 
@@ -30,7 +31,7 @@ Valenta Zahradník Novotný Zapletal Janoštík
 - Filozofie otevřeného zdroje
 - Komunitní vývoj
 
-![bg right](open.png)
+![bg right](stallman.jpeg)
 
 ---
 
@@ -39,7 +40,7 @@ Valenta Zahradník Novotný Zapletal Janoštík
 - Přehled distribucí
 - Přizpůsobení
 
-![bg right](TuxFlat.png)
+![bg right](tux.png)
 
 ---
 
@@ -48,7 +49,7 @@ Valenta Zahradník Novotný Zapletal Janoštík
 - Silný shell
 - Skriptování a automatizace
 
-![bg right](stallman.jpeg)
+![bg right](neofetch.png)
 
 ---
 
@@ -57,16 +58,16 @@ Valenta Zahradník Novotný Zapletal Janoštík
 - Bezpečnostní model
 - Stabilita
 
-![bg right](tux.png)
+![bg right](open.png)
 
 ---
 
 # Správa balíčků:
 
-Systémy balíčků: Distribuce používají správce balíčků jako APT (Debian/Ubuntu), YUM (Fedora) a Pacman (Arch) k instalaci, aktualizaci a správě softwaru.
-Rozlišování závislostí: Správci balíčků se zabývají závislostmi, zjednodušují proces instalace softwaru.
+- Systémy balíčků
+- Rozlišování závislostí
 
----
+![bg right](pacman.png)
 
 ---
 
@@ -75,34 +76,43 @@ Rozlišování závislostí: Správci balíčků se zabývají závislostmi, zje
 - Webové servery
 - Databázové servery
 
+![bg right](server.jpeg)
+
 ---
 
 # Desktopová prostředí:
 
-Možnosti desktopu: Linux poskytuje různá desktopová prostředí, jako jsou GNOME, KDE, XFCE a LXQt, nabízející přizpůsobitelný a uživatelsky přívětivý zážitek.
-Dostupnost softwaru: Pro Linux je k dispozici široká škála softwaru, a kompatibilita se neustále zlepšuje.
+- Možnosti desktopu
+- Dostupnost softwaru
+
+![bg right](rice.webp)
 
 ---
 
 # Kontejnerizace a virtualizace:
 
-Kontejnery: Technologie jako Docker a Podman umožňují efektivní nasazení a správu aplikací v izolovaných prostředích.
-Virtualizace: Nástroje jako KVM a VirtualBox umožňují spouštět více operačních systémů na jednom hostiteli.
+- Živé prostředí
+- Kontejnery
+- Virtualizace
+
+![bg right](docker.png)
 
 ---
 
 # Budoucí trendy:
 
-Cloud Computing: Linux je základním prvkem v cloudu, přičemž mnoho cloudových služeb spoléhá na servery s Linuxem.
-Kontejnery a mikroslužby: Narůstající přijetí nástrojů pro orchestraci kontejnerů, jako je Kubernetes, pro škálovatelné a distribuované aplikace.
+- Cloud Computing
+- Kontejnery a mikroslužby
+
+![bg right](quantum.jpeg)
 
 ---
 
 # Závěr:
 
-Shrnutí: Cesta Linuxu od projektu pro nadšence k celosvětové síle v počítačovém světě.
-Všestrannost: Přizpůsobivost Linuxu v různých prostředích, od serverů po vestavěné systémy.
-Trvající inovace: Živá otevřená komunita zajišťuje neustálý vývoj a zdokonalování Linuxu.
+- Shrnutí
+- Všestrannost
+- Trvající inovace
 
 ---
 
