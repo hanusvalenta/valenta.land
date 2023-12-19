@@ -120,7 +120,8 @@ Zapletal Janoštík
 
 # Otázky pro ostatní OS
 
-
+Windows: Proč jede Váš operační systém rychleji na Linuxu?
+MacOS: Kolik dětí vyrábělo ten počítač za 100k?
 
 ![bg right](meme.png)
 
