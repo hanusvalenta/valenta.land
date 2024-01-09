@@ -10,8 +10,10 @@ class: invert
 
 ###### A proč jsme ve všem nejlepší.
 
-Valenta Zahradník Novotný 
-Zapletal Janoštík
+Valenta
+Zahradník, Novotný 
+Zapletal, Janoštík
+Zlámal, Kadlčak
 
 ---
 
