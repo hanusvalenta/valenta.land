@@ -37,7 +37,7 @@ Zlámal, Kadlčak
 
 ---
 
-# Rozmanitost distribucí:
+## Rozmanitost distribucí:
 
 - Přehled distribucí
 - Přizpůsobení
@@ -91,7 +91,7 @@ Zlámal, Kadlčak
 
 ---
 
-# Kontejnerizace a virtualizace:
+### Kontejnerizace a virtualizace:
 
 - Živé prostředí
 - Kontejnery
@@ -124,7 +124,7 @@ Zlámal, Kadlčak
 
 Windows: Proč jede Váš operační systém rychleji na Linuxu?
 
-MacOS: Kolik dětí vyrábělo ten počítač za 100k?
+MacOS: Proč by tě měl tvůj mobil umět nahlásit policii?
 
 ![bg right](meme.png)
 
