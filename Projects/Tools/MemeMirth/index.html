@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MemeMirth</title>
+    <title>Your Website</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ffffff; /* Set background color to white */
+            background-color: #ffffff;
         }
 
         nav {
-            background-color: #000000; /* Set background color for the navbar to black */
+            background-color: #000000;
             padding: 10px;
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
 
         nav a {
             text-decoration: none;
-            color: #fff; /* Set link color to white */
+            color: #fff;
             padding: 10px 20px;
             margin: 0 10px;
             border-radius: 5px;
@@ -28,21 +28,59 @@
         }
 
         nav a:hover {
-            background-color: #333; /* Darken the background color on hover */
+            background-color: #333;
         }
 
-        /* Add additional styling as needed */
+        button {
+            display: block;
+            margin: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #randomFileDisplay {
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="#">Home</a>
-        <a href="#">Upload</a>
         <a href="#">About</a>
+        <a href="#">Upload</a>
     </nav>
 
-    <!-- Your content goes here -->
+    <button onclick="displayRandomFile()">Display Random File</button>
+
+    <div id="randomFileDisplay"></div>
+
+    <script>
+        function displayRandomFile() {
+            const folderPath = 'Library';
+            const fileExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+
+            const fileDisplay = document.getElementById('randomFileDisplay');
+
+            fetch(folderPath)
+                .then(response => response.text())
+                .then(data => {
+                    const files = data.split('\n').filter(file => fileExtensions.some(ext => file.toLowerCase().endsWith(ext)));
+
+                    if (files.length === 0) {
+                        fileDisplay.innerHTML = '<p>No files found in the Library folder.</p>';
+                    } else {
+                        const randomFile = files[Math.floor(Math.random() * files.length)];
+                        fileDisplay.innerHTML = `<p>Random File: <strong>${randomFile}</strong></p>`;
+                    }
+                })
+                .catch(error => console.error('Error fetching files:', error));
+        }
+    </script>
 
 </body>
 </html>
