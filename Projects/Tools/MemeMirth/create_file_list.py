@@ -13,7 +13,7 @@ def create_file_list(folder_path, json_file_path):
 
 if __name__ == "__main__":
     current_folder = os.path.dirname(os.path.abspath(__file__))
-    library_folder = os.path.join(current_folder, "Library")
+    library_folder = os.path.join(current_folder, "static", "Library")
     json_file = os.path.join(current_folder, "file_list.json")
 
     create_file_list(library_folder, json_file)
