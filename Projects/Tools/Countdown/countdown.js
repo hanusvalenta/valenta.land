@@ -18,4 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("countdown").innerHTML = "EXPIRED";
         }
     }, 1000);
+
+    fetch('DailyCopypastaStatus.txt')
+        .then(response => response.text())
+        .then(text => {
+            document.getElementById("countdown").innerHTML += "<br>" + text;
+        })
+        .catch(error => console.error('Error fetching copypasta.txt:', error));
 });
