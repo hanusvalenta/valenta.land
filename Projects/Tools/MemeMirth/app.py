@@ -9,7 +9,7 @@ def get_valid_files():
     with open('file_list.json', 'r') as json_file:
         files = json.load(json_file)
 
-    valid_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.mp4'}
+    valid_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.mp4', '.webp'}
     valid_files = [file for file in files if os.path.splitext(file)[1].lower() in valid_extensions]
 
     return valid_files
