@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random File Display</title>
+</head>
+<body>
+    <h1>Randomly Displayed File:</h1>
+    {% if file.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+        <img src="{{ url_for('static', filename='Library/' + file) }}" alt="Random Image">
+    {% elif file.endswith('.mp4') %}
+        <video width="320" height="240" controls>
+            <source src="{{ url_for('static', filename='Library/' + file) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% else %}
+        <p>Unsupported file format</p>
+    {% endif %}
+</body>
+</html>
