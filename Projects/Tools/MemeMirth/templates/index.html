@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random File Display</title>
+    <title>MemeMirth</title>
 </head>
 <body>
-    <h1>Randomly Displayed File:</h1>
+    <h1>Here you go your brainrot:</h1>
+    
     {% if file.endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
         <img src="{{ url_for('static', filename='Library/' + file) }}" alt="Random Image">
     {% elif file.endswith('.mp4') %}
