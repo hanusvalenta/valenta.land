@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateReason() {
         document.getElementById("current-reason").textContent = reasons[reasonIndex];
-        reasonIndex = (reasonIndex + 1) % reasons.length; // Loop through the reasons
+        reasonIndex = (reasonIndex + 1) % reasons.length;
     }
 
     updateReason();
 
-    setInterval(updateReason, 1000);
+    setInterval(updateReason, 3000);
 
     var countDownDate = new Date("January 21, 2024 11:56:04").getTime();
 
