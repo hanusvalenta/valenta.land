@@ -10,6 +10,8 @@ class: invert
 
 Valenta
 
+![bg right](4ed29c28-7291-447d-ae74-7ceafa55454a-3334867132.png)
+
 ---
 
 ## What is Blender?
