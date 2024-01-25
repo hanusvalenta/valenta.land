@@ -91,7 +91,7 @@ Vytvořme společně základní 3D objekt.
 - Blender je všestranný nástroj pro tvorbu 3D.
 - Trvalý vývoj a živá komunita.
 
-### Děkujeme za vaši pozornost!
+### Děkuji za vaši pozornost!
 
 ---
 
