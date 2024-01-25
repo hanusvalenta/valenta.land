@@ -14,88 +14,87 @@ Valenta
 
 ---
 
-## What is Blender?
+## Co je to Blender?
 
-- **Blender** is a powerful and open-source 3D creation suite.
-- It is used for modeling, sculpting, texturing, lighting, rendering, animation, and more.
-- Supports a wide range of features for artists, designers, and developers.
-
----
-
-## Key Features
-
-1. **Modeling:**
-   - Create 3D models using various tools.
-   - Mesh editing, sculpting, and more.
-
-2. **Animation:**
-   - Rigging, keyframe animation, and character animation.
-
-3. **Rendering:**
-   - High-quality rendering with Cycles and Eevee engines.
-
-4. **Texturing and Shading:**
-   - UV mapping, procedural textures, and material creation.
+- **Blender** je výkonný a open-source 3D tvorivý balík.
+- Používá se pro modelování, sochařství, texturování, osvětlování, renderování, animaci a další.
+- Podporuje širokou škálu funkcí pro umělce, designéry a vývojáře.
 
 ---
 
-## User Interface
+## Klíčové vlastnosti
+
+1. **Modelování:**
+   - Vytvářejte 3D modely pomocí různých nástrojů.
+   - Úprava sítí, sochařství a další.
+
+2. **Animace:**
+   - Rigging, animace klíčových snímků a animace postav.
+
+3. **Renderování:**
+   - Vysokokvalitní renderování s motory Cycles a Eevee.
+
+4. **Texturování a stínování:**
+   - UV mapování, procedurální textury a vytváření materiálů.
+
+---
+
+## Uživatelské rozhraní
 
 ![Blender UI](assets/blender-ui.png)
 
-- Blender has a unique but powerful interface.
-- Consists of 3D viewports, properties editor, timeline, and more.
+- Blender má jedinečné, ale výkonné rozhraní.
+- Sestává z 3D pohledů, editoru vlastností, časové osy a dalších prvků.
 
 ---
 
-## Getting Started
+## Začínáme
 
-### Installation
+### Instalace
 
-- Download Blender from [blender.org](https://www.blender.org/download/).
-- Install and launch the application.
+- Stáhněte si Blender z [blender.org](https://www.blender.org/download/).
+- Nainstalujte a spusťte aplikaci.
 
-### Learning Resources
+### Učební zdroje
 
-- Official documentation: [docs.blender.org](https://docs.blender.org/)
-- Tutorials and community: [blenderartists.org](https://blenderartists.org/)
-
----
-
-## Demo: Creating a Simple Object
-
-Let's create a basic 3D object together.
-
-1. Open Blender and select the default cube.
-2. Enter Edit Mode (`Tab` key) and manipulate the vertices.
-3. Add a new primitive shape (e.g., sphere).
-4. Apply materials and render the scene.
+- Oficiální dokumentace: [docs.blender.org](https://docs.blender.org/)
+- Tutoriály a komunita: [blenderartists.org](https://blenderartists.org/)
 
 ---
 
-## Advanced Features
+## Demo: Vytvoření jednoduchého objektu
 
-1. **Particle Systems:**
-   - Simulate hair, fur, smoke, and more.
+Vytvořme společně základní 3D objekt.
 
-2. **Physics Simulations:**
-   - Realistic simulations for fluids, cloth, and soft/rigid bodies.
-
-3. **Scripting and Add-ons:**
-   - Extend Blender's functionality with Python scripting.
+1. Otevřete Blender a vyberte výchozí kostku.
+2. Přejděte do režimu úprav (`Tab` klávesa) a manipulujte s vrcholy.
+3. Přidejte nový primitivní tvar (např. koule).
+4. Aplikujte materiály a zobrazte scénu.
 
 ---
 
-## Conclusion
+## Pokročilé funkce
 
-- Blender is a versatile tool for 3D creation.
-- Continuous development and a vibrant community.
+1. **Částicové systémy:**
+   - Simulujte vlasy, srst, kouř a další.
 
-### Thank you for your attention!
+2. **Fyzikální simulace:**
+   - Realistické simulace pro kapaliny, látky a měkké/tvrdé tělesa.
+
+3. **Skriptování a doplňky:**
+   - Rozšiřte funkčnost Blenderu pomocí skriptování v Pythonu.
 
 ---
 
-## Q&A
+## Závěr
 
-Feel free to ask any questions.
+- Blender je všestranný nástroj pro tvorbu 3D.
+- Trvalý vývoj a živá komunita.
 
+### Děkujeme za vaši pozornost!
+
+---
+
+## Otázky a odpovědi
+
+Zeptejte se na cokoli.
