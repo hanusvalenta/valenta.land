@@ -10,7 +10,7 @@ class: invert
 
 Valenta
 
-![bg right](4ed29c28-7291-447d-ae74-7ceafa55454a-3334867132.png)
+![bg right](logo.png)
 
 ---
 
@@ -24,41 +24,33 @@ Valenta
 
 ## Klíčové vlastnosti
 
-1. **Modelování:**
-   - Vytvářejte 3D modely pomocí různých nástrojů.
-   - Úprava sítí, sochařství a další.
+### Modelování:
+   - ###### Vytvářejte 3D modely pomocí různých nástrojů.
+   - ###### Úprava sítí, sochařství a další.
 
-2. **Animace:**
-   - Rigging, animace klíčových snímků a animace postav.
+### Animace:
+   - ###### Rigging, animace klíčových snímků a animace postav.
 
-3. **Renderování:**
-   - Vysokokvalitní renderování s motory Cycles a Eevee.
+![bg](monke.png)
 
-4. **Texturování a stínování:**
-   - UV mapování, procedurální textury a vytváření materiálů.
+---
+
+## Renderování:
+   - ###### Vysokokvalitní renderování s motory Cycles a Eevee.
+
+## Texturování a stínování:
+   - ###### UV mapování, procedurální textury a vytváření materiálů.
+
+![bg](scene.jpg)
 
 ---
 
 ## Uživatelské rozhraní
 
-![Blender UI](assets/blender-ui.png)
+![bg](ui.png)
 
 - Blender má jedinečné, ale výkonné rozhraní.
 - Sestává z 3D pohledů, editoru vlastností, časové osy a dalších prvků.
-
----
-
-## Začínáme
-
-### Instalace
-
-- Stáhněte si Blender z [blender.org](https://www.blender.org/download/).
-- Nainstalujte a spusťte aplikaci.
-
-### Učební zdroje
-
-- Oficiální dokumentace: [docs.blender.org](https://docs.blender.org/)
-- Tutoriály a komunita: [blenderartists.org](https://blenderartists.org/)
 
 ---
 
@@ -70,6 +62,8 @@ Vytvořme společně základní 3D objekt.
 2. Přejděte do režimu úprav (`Tab` klávesa) a manipulujte s vrcholy.
 3. Přidejte nový primitivní tvar (např. koule).
 4. Aplikujte materiály a zobrazte scénu.
+
+![bg](start.png)
 
 ---
 
@@ -84,12 +78,13 @@ Vytvořme společně základní 3D objekt.
 3. **Skriptování a doplňky:**
    - Rozšiřte funkčnost Blenderu pomocí skriptování v Pythonu.
 
+![bg](nodes.webp)
+
 ---
 
 ## Závěr
 
-- Blender je všestranný nástroj pro tvorbu 3D.
-- Trvalý vývoj a živá komunita.
+- Blender je všestranný nástroj pro tvorbu.
 
 ### Děkuji za vaši pozornost!
 
