@@ -1,0 +1,26 @@
+:root {
+    --darkest: 0C0B0B;
+    --white: F8F9F9;
+    --lighter: CBCBCA;
+    --mountainGray: F0F0F0;
+    --gold: EBB342;
+}
+
+body {
+    background-color: var(--mountainGray);
+}
+
+.Header {
+
+}
+
+.NavBar {
+    border-radius: 25px;
+}
+
+.NavBar:hover
+
+.mainImg {
+    width: 100vh;
+    height: auto;
+}
