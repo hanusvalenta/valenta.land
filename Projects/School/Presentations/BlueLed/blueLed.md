@@ -24,6 +24,8 @@ class: invert
 
 ---
 
+Dioda taková, že světlo vyzařované na p-n přechodu je úměrné předpínacímu proudu.
+
 3M $
 2014 Nobelova cena za fyziku
 Narozen	22. května 1954, Ikata, Ehime, Japonsko
