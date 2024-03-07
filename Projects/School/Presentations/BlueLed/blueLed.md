@@ -13,14 +13,26 @@ class: invert
 # Fungování Led
 (Dioda vyzařující světlo)
 
+---
+
+![bg](base.png)
+# Základní vazba
 
 ---
 
-
+![bg](doping.png)
 
 ---
 
+![bg](bands.png)
 
+---
+
+![bg](dopingTwo.png)
+
+---
+
+![bg](NandPtype.png)
 
 ---
 
@@ -49,4 +61,4 @@ dát další trisku do přístroje
 ---
 
 # Zpětná vazba a děkuji za pozornost
-＜（＾－＾）＞
+＜（＾－＾）＞🤍
