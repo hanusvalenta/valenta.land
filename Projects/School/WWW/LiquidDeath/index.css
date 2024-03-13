@@ -12,7 +12,7 @@
 }
 
 body {
-    background-color: var(--darkest);
+    background-color: var(--white);
     font-family: ACMN;
 }
 
@@ -25,8 +25,8 @@ body {
 .NavBar {
     position: absolute;
     z-index: 2;
-    width: 10vw;
-    height: 3vw;
+    width: 8vw;
+    height: 2vw;
     display: flex;
     background-color: var(--white);
     border-radius: 25px;
@@ -35,31 +35,77 @@ body {
     align-items: center;
     justify-content: space-between;
     transition-duration: 1s;
+    background-color: var(--darkest);
+    margin-top: 2vw;
 }
 
 .NavImg {
     filter: invert(1);
     top: 0%;
     z-index: 3;
+    position: relative;
+}
+
+.NavBar:hover .NavImg {
+    display: block;
+    position: static;
 }
 
 .NavBar:hover {
     width: 75vw;
 }
 
+.NavBar a {
+    opacity: 0;
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    transition-duration: 0.3s;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-top: 0.2vw;
+    padding-bottom: 0.2vw;
+    word-break: keep-all;
+}
+
+.NavBar a:hover {
+    color: var(--darkest);
+    background-color: var(--white);
+    border-radius: 25px;
+}
+
+.NavBar:hover a {
+    opacity: 1;
+}
+
+#bigAhhImage {
+
+}
+
 .mainImg {
-    margin-top: 0px;
+    margin-top: 0vh;
     width: 100vw;
 }
 
 h1 {
-    color: var(--white);
+    color: var(--darkest);
+    font-size: 10vw;
+    margin-top: 20vw
 }
 
 p {
-    color: var(--white);
+    color: var(--darkest);
+    font-size: 3vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
 }
 
 a {
-    color: var(--white);
+    color: var(--darkest);
+}
+
+.Main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
