@@ -105,7 +105,7 @@ h1 {
 }
 
 h2 {
-    font-size: 5vw;
+    font-size: 3vw;
 }
 
 p {
@@ -127,4 +127,11 @@ a {
 
 .reference {
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.reference p {
+    font-size: 1vw;
 }
