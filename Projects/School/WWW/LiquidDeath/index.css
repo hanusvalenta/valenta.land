@@ -104,6 +104,10 @@ h1 {
     margin-top: 20vw
 }
 
+h2 {
+    font-size: 5vw;
+}
+
 p {
     color: var(--darkest);
     font-size: 3vw;
@@ -119,4 +123,8 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.reference {
+    display: flex;
 }
