@@ -1,0 +1,49 @@
+2023-11-13 21:29:25,419	Stalking	INFO	{'train': {'log_interval': 200, 'seed': 1234, 'epochs': 20000, 'learning_rate': 0.0001, 'betas': [0.8, 0.99], 'eps': 1e-09, 'batch_size': 5, 'fp16_run': True, 'lr_decay': 0.999875, 'segment_size': 12800, 'init_lr_ratio': 1, 'warmup_epochs': 0, 'c_mel': 45, 'c_kl': 1.0}, 'data': {'max_wav_value': 32768.0, 'sampling_rate': 40000, 'filter_length': 2048, 'hop_length': 400, 'win_length': 2048, 'n_mel_channels': 125, 'mel_fmin': 0.0, 'mel_fmax': None, 'training_files': './logs\\Stalking/filelist.txt'}, 'model': {'inter_channels': 192, 'hidden_channels': 192, 'filter_channels': 768, 'n_heads': 2, 'n_layers': 6, 'kernel_size': 3, 'p_dropout': 0, 'resblock': '1', 'resblock_kernel_sizes': [3, 7, 11], 'resblock_dilation_sizes': [[1, 3, 5], [1, 3, 5], [1, 3, 5]], 'upsample_rates': [10, 10, 2, 2], 'upsample_initial_channel': 512, 'upsample_kernel_sizes': [16, 16, 4, 4], 'use_spectral_norm': False, 'gin_channels': 256, 'spk_embed_dim': 109}, 'model_dir': './logs\\Stalking', 'experiment_dir': './logs\\Stalking', 'save_every_epoch': 50, 'name': 'Stalking', 'total_epoch': 35, 'pretrainG': 'pretrained/f0G40k.pth', 'pretrainD': 'pretrained/f0D40k.pth', 'version': 'v1', 'gpus': '0', 'sample_rate': '40k', 'if_f0': 1, 'if_latest': 1, 'save_every_weights': '1', 'if_cache_data_in_gpu': 1}
+2023-11-13 21:29:26,346	Stalking	INFO	loaded pretrained pretrained/f0G40k.pth
+2023-11-13 21:29:26,456	Stalking	INFO	loaded pretrained pretrained/f0D40k.pth
+2023-11-13 21:29:41,421	Stalking	INFO	Train Epoch: 1 [0%]
+2023-11-13 21:29:41,422	Stalking	INFO	[0, 0.0001]
+2023-11-13 21:29:41,423	Stalking	INFO	loss_disc=3.284, loss_gen=2.267, loss_fm=8.462,loss_mel=28.317, loss_kl=9.000
+2023-11-13 21:29:50,880	Stalking	INFO	====> Epoch: 1 [2023-11-13 21:29:50] | (0:00:14.628748)
+2023-11-13 21:29:57,563	Stalking	INFO	====> Epoch: 2 [2023-11-13 21:29:57] | (0:00:06.677743)
+2023-11-13 21:30:04,201	Stalking	INFO	====> Epoch: 3 [2023-11-13 21:30:04] | (0:00:06.635642)
+2023-11-13 21:30:10,848	Stalking	INFO	====> Epoch: 4 [2023-11-13 21:30:10] | (0:00:06.643015)
+2023-11-13 21:30:17,481	Stalking	INFO	====> Epoch: 5 [2023-11-13 21:30:17] | (0:00:06.630470)
+2023-11-13 21:30:24,140	Stalking	INFO	====> Epoch: 6 [2023-11-13 21:30:24] | (0:00:06.654907)
+2023-11-13 21:30:30,775	Stalking	INFO	====> Epoch: 7 [2023-11-13 21:30:30] | (0:00:06.630944)
+2023-11-13 21:30:37,478	Stalking	INFO	====> Epoch: 8 [2023-11-13 21:30:37] | (0:00:06.697996)
+2023-11-13 21:30:44,158	Stalking	INFO	====> Epoch: 9 [2023-11-13 21:30:44] | (0:00:06.677579)
+2023-11-13 21:30:50,787	Stalking	INFO	====> Epoch: 10 [2023-11-13 21:30:50] | (0:00:06.624160)
+2023-11-13 21:30:57,410	Stalking	INFO	====> Epoch: 11 [2023-11-13 21:30:57] | (0:00:06.619982)
+2023-11-13 21:31:04,060	Stalking	INFO	====> Epoch: 12 [2023-11-13 21:31:04] | (0:00:06.646441)
+2023-11-13 21:31:07,796	Stalking	INFO	Train Epoch: 13 [44%]
+2023-11-13 21:31:07,803	Stalking	INFO	[200, 9.98501030820433e-05]
+2023-11-13 21:31:07,803	Stalking	INFO	loss_disc=3.022, loss_gen=2.880, loss_fm=12.872,loss_mel=22.927, loss_kl=2.059
+2023-11-13 21:31:11,014	Stalking	INFO	====> Epoch: 13 [2023-11-13 21:31:11] | (0:00:06.951532)
+2023-11-13 21:31:17,691	Stalking	INFO	====> Epoch: 14 [2023-11-13 21:31:17] | (0:00:06.670518)
+2023-11-13 21:31:24,387	Stalking	INFO	====> Epoch: 15 [2023-11-13 21:31:24] | (0:00:06.693489)
+2023-11-13 21:31:31,044	Stalking	INFO	====> Epoch: 16 [2023-11-13 21:31:31] | (0:00:06.653747)
+2023-11-13 21:31:37,763	Stalking	INFO	====> Epoch: 17 [2023-11-13 21:31:37] | (0:00:06.714729)
+2023-11-13 21:31:44,447	Stalking	INFO	====> Epoch: 18 [2023-11-13 21:31:44] | (0:00:06.680921)
+2023-11-13 21:31:51,121	Stalking	INFO	====> Epoch: 19 [2023-11-13 21:31:51] | (0:00:06.670713)
+2023-11-13 21:31:57,811	Stalking	INFO	====> Epoch: 20 [2023-11-13 21:31:57] | (0:00:06.685668)
+2023-11-13 21:32:04,441	Stalking	INFO	====> Epoch: 21 [2023-11-13 21:32:04] | (0:00:06.628395)
+2023-11-13 21:32:11,122	Stalking	INFO	====> Epoch: 22 [2023-11-13 21:32:11] | (0:00:06.676921)
+2023-11-13 21:32:17,775	Stalking	INFO	====> Epoch: 23 [2023-11-13 21:32:17] | (0:00:06.648758)
+2023-11-13 21:32:24,430	Stalking	INFO	====> Epoch: 24 [2023-11-13 21:32:24] | (0:00:06.651936)
+2023-11-13 21:32:31,110	Stalking	INFO	====> Epoch: 25 [2023-11-13 21:32:31] | (0:00:06.677134)
+2023-11-13 21:32:31,532	Stalking	INFO	Train Epoch: 26 [44%]
+2023-11-13 21:32:31,542	Stalking	INFO	[400, 9.968796830108985e-05]
+2023-11-13 21:32:31,542	Stalking	INFO	loss_disc=3.009, loss_gen=2.995, loss_fm=12.236,loss_mel=21.914, loss_kl=1.315
+2023-11-13 21:32:38,093	Stalking	INFO	====> Epoch: 26 [2023-11-13 21:32:38] | (0:00:06.980108)
+2023-11-13 21:32:44,803	Stalking	INFO	====> Epoch: 27 [2023-11-13 21:32:44] | (0:00:06.704334)
+2023-11-13 21:32:51,458	Stalking	INFO	====> Epoch: 28 [2023-11-13 21:32:51] | (0:00:06.651888)
+2023-11-13 21:32:58,162	Stalking	INFO	====> Epoch: 29 [2023-11-13 21:32:58] | (0:00:06.701159)
+2023-11-13 21:33:04,838	Stalking	INFO	====> Epoch: 30 [2023-11-13 21:33:04] | (0:00:06.673281)
+2023-11-13 21:33:11,540	Stalking	INFO	====> Epoch: 31 [2023-11-13 21:33:11] | (0:00:06.697460)
+2023-11-13 21:33:18,293	Stalking	INFO	====> Epoch: 32 [2023-11-13 21:33:18] | (0:00:06.750564)
+2023-11-13 21:33:25,219	Stalking	INFO	====> Epoch: 33 [2023-11-13 21:33:25] | (0:00:06.922399)
+2023-11-13 21:33:32,183	Stalking	INFO	====> Epoch: 34 [2023-11-13 21:33:32] | (0:00:06.961106)
+2023-11-13 21:33:38,918	Stalking	INFO	====> Epoch: 35 [2023-11-13 21:33:38] | (0:00:06.732106)
+2023-11-13 21:33:38,919	Stalking	INFO	Training is done. The program is closed.
+2023-11-13 21:33:38,993	Stalking	INFO	saving final ckpt:Success.
