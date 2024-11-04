@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const countDownDate = new Date("December 10, 2024 23:59:59").getTime();
+    // Use ISO 8601 format to avoid timezone issues
+    const countDownDate = new Date("2024-12-10T23:59:59").getTime();
 
     const x = setInterval(function () {
         const now = new Date().getTime();
