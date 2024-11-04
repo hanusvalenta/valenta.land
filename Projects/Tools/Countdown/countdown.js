@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Use ISO 8601 format to avoid timezone issues
     const countDownDate = new Date("2024-12-10T23:59:59").getTime();
 
     const x = setInterval(function () {
         const now = new Date().getTime();
         const distance = countDownDate - now;
+
+        // Debugging line to check values
+        console.log(`countDownDate: ${countDownDate}, now: ${now}, distance: ${distance}`);
 
         if (distance >= 0) {
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
