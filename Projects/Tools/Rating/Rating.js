@@ -1,30 +1,35 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const countDownDate = new Date("2024-12-10T23:59:59").getTime();
+    const stars = document.querySelectorAll('.stars span');
+    const ratingMessage = document.getElementById('rating-message');
+    let selectedRating = localStorage.getItem('userRating') || 0;
 
-    const x = setInterval(function () {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
+    highlightStars(selectedRating);
 
-        // Debugging line to check values
-        console.log(`countDownDate: ${countDownDate}, now: ${now}, distance: ${distance}`);
+    stars.forEach(star => {
+        star.addEventListener('mouseover', function () {
+            const value = this.getAttribute('data-value');
+            highlightStars(value);
+        });
 
-        if (distance >= 0) {
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        star.addEventListener('mouseout', function () {
+            highlightStars(selectedRating);
+        });
 
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        } else {
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = "EXPIRED";
-        }
-    }, 1000);
+        star.addEventListener('click', function () {
+            selectedRating = this.getAttribute('data-value');
+            localStorage.setItem('userRating', selectedRating);
+            highlightStars(selectedRating);
+            ratingMessage.textContent = `Díky za hodnocení: ${selectedRating} hvězdiček!`;
+        });
+    });
 
-    fetch('DailyCopypastaStatus.txt')
-        .then(response => response.text())
-        .then(text => {
-            document.getElementById("countdown").innerHTML += `<br>${text}`;
-        })
-        .catch(error => console.error('Error fetching DailyCopypastaStatus.txt:', error));
+    function highlightStars(value) {
+        stars.forEach(star => {
+            if (star.getAttribute('data-value') <= value) {
+                star.classList.add('highlighted');
+            } else {
+                star.classList.remove('highlighted');
+            }
+        });
+    }
 });

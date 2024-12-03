@@ -7,10 +7,25 @@ body {
     margin: 0;
 }
 
-.countdown-container {
+.rating-container {
     text-align: center;
 }
 
-#countdown {
+.stars {
     font-size: 2em;
+    color: gray;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.stars span.highlighted {
+    color: gold;
+}
+
+#rating-message {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: green;
 }
