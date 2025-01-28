@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const countDownDate = new Date("2024-12-10T23:59:59").getTime();
+    const countDownDate = new Date("2025-02-12T11:59:00").getTime();
 
     const x = setInterval(function () {
         const now = new Date().getTime();
         const distance = countDownDate - now;
 
-        // Debugging line to check values
         console.log(`countDownDate: ${countDownDate}, now: ${now}, distance: ${distance}`);
 
         if (distance >= 0) {
