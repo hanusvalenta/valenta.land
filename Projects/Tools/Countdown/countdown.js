@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () { 
     const countDownDate = new Date("2025-05-25T00:00:00").getTime();
+    const countdownElement = document.getElementById("countdown");
 
     const x = setInterval(function () {
         const now = new Date().getTime();
@@ -13,17 +14,23 @@ document.addEventListener('DOMContentLoaded', function () {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            // Adjust font size dynamically (smaller when far, bigger when close)
+            let remainingDays = distance / (1000 * 60 * 60 * 24);
+            let fontSize = Math.max(16, 100 - remainingDays * 1.5); // Ensures it doesn't get too small
+
+            countdownElement.style.fontSize = `${fontSize}px`;
         } else {
             clearInterval(x);
-            document.getElementById("countdown").innerHTML = "EXPIRED";
+            countdownElement.innerHTML = "EXPIRED";
         }
     }, 1000);
 
     fetch('DailyCopypastaStatus.txt')
         .then(response => response.text())
         .then(text => {
-            document.getElementById("countdown").innerHTML += `<br>${text}`;
+            countdownElement.innerHTML += `<br>${text}`;
         })
         .catch(error => console.error('Error fetching DailyCopypastaStatus.txt:', error));
 });
