@@ -16,9 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-            // Adjust font size dynamically (smaller when far, bigger when close)
             let remainingDays = distance / (1000 * 60 * 60 * 24);
-            let fontSize = Math.max(16, 100 - remainingDays * 1.5); // Ensures it doesn't get too small
+            let fontSize = Math.max(16, 150 - remainingDays * 1.5);
 
             countdownElement.style.fontSize = `${fontSize}px`;
         } else {
