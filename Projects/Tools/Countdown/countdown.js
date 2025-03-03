@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const countdownElement = document.getElementById("countdown");
     
     let rotationAngle = 0;
-    let direction = 1; // 1 for right, -1 for left
+    let direction = 1;
     let lastTimestamp = 0;
 
     function updateCountdown() {
@@ -18,26 +18,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
             countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-            // Adjust font size dynamically (smaller when far, bigger when close)
             let remainingDays = distance / (1000 * 60 * 60 * 24);
-            let fontSize = Math.max(20, 80 - remainingDays * 1); // More subtle scaling
+            let fontSize = Math.max(20, 110 - remainingDays * 1);
             countdownElement.style.fontSize = `${fontSize}px`;
             
-            // Smooth back-and-forth rotation effect
-            rotationAngle += direction * 0.1; // Slow down the rotation
-            if (rotationAngle > 5 || rotationAngle < -5) { // Reduce max angle for subtle effect
+            rotationAngle += direction * 0.1;
+            if (rotationAngle > 5 || rotationAngle < -5) {
                 direction *= -1;
             }
             countdownElement.style.transform = `rotate(${rotationAngle}deg)`;
             
-            requestAnimationFrame(updateCountdown); // Smoother animation
+            requestAnimationFrame(updateCountdown);
         } else {
             countdownElement.innerHTML = "EXPIRED";
-            countdownElement.style.transform = "rotate(0deg)"; // Reset rotation
+            countdownElement.style.transform = "rotate(0deg)";
         }
     }
 
-    requestAnimationFrame(updateCountdown); // Start smooth animation
+    requestAnimationFrame(updateCountdown);
 
     fetch('DailyCopypastaStatus.txt')
         .then(response => response.text())
