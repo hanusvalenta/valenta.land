@@ -6,6 +6,7 @@ class RandomFieldSelector:
     def __init__(self, root):
         self.root = root
         self.root.title("Kaja decition maker")
+        self.root.iconbitmap("heart.ico")
         self.root.geometry("500x500")
         self.root.configure(bg='#f0f8ff')
         
@@ -84,13 +85,13 @@ class RandomFieldSelector:
     
     def random_select(self):
         if not self.input_fields:
-            messagebox.showwarning("Oops", "Please add at least one option!")
+            messagebox.showwarning("Oops", "Please add at least one option love :<")
             return
         
         non_empty = [(entry.get(), idx) for idx, (frame, entry) in enumerate(self.input_fields) if entry.get().strip()]
         
         if not non_empty:
-            messagebox.showwarning("Oops", "All fields are empty!")
+            messagebox.showwarning("Oops", "All fields are empty honey :<")
             return
         
         selected_text, selected_idx = random.choice(non_empty)
@@ -100,7 +101,7 @@ class RandomFieldSelector:
                 entry.config(bg=self.style['highlight'])
                 self.root.after(1500, lambda: entry.config(bg=self.style['entry_bg']))
         
-        self.result_label.config(text=f"Selected: {selected_text}")
+        self.result_label.config(text=f"Selected: {selected_text} Mwuah -3-")
 
 if __name__ == "__main__":
     root = tk.Tk()
