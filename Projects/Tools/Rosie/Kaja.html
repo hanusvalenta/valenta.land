@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite flowers for Holly</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            max-height: 600px;
+            background: #000;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px #ff0000;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            animation: scroll-left 10s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui-layer">
+        <div class="scrolling-text">I love you... You're always awesome :3... Mwuah... Mwuah... Mwauh... Mwuuuuaaaaaaah >:3...</div>
+    </div>
+    <canvas id="renderCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('renderCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const width = 320;
+        const height = 240;
+        canvas.width = width;
+        canvas.height = height;
+
+        const fov = 250;
+        const viewDist = 4;
+        let angle = 0;
+
+        const petalCount = Math.floor(Math.random() * 8) + 4; 
+        const petalLength = 0.8 + Math.random() * 1.5;
+        const petalWidth = 0.3 + Math.random() * 0.5;
+        const stemHeight = 2 + Math.random() * 1.5;
+        const flowerHue = Math.random() * 360;
+        const flowerSat = 50 + Math.random() * 50;
+
+        const vertices = [];
+        const faces = [];
+
+        vertices.push({x: 0, y: stemHeight, z: 0}); 
+        vertices.push({x: 0, y: 0, z: 0}); 
+
+        const stemColor = `hsl(100, 60%, 30%)`;
+        faces.push({verts: [0, 1], color: stemColor, type: 'line'});
+
+        const centerTopIndex = vertices.length;
+        vertices.push({x: 0, y: -0.2, z: 0}); 
+        
+        for (let i = 0; i < petalCount; i++) {
+            const theta = (i / petalCount) * Math.PI * 2;
+            const nextTheta = ((i + 1) / petalCount) * Math.PI * 2;
+
+            const p1x = Math.cos(theta) * petalWidth;
+            const p1z = Math.sin(theta) * petalWidth;
+            const p2x = Math.cos(theta) * petalLength;
+            const p2z = Math.sin(theta) * petalLength;
+            
+            const vBase = vertices.length;
+            
+            vertices.push({x: p1x, y: 0, z: p1z});
+            vertices.push({x: p2x, y: -0.5, z: p2z}); 
+
+            const brightness = 30 + Math.random() * 40;
+            const faceColor = `hsl(${flowerHue}, ${flowerSat}%, ${brightness}%)`;
+
+            faces.push({
+                verts: [centerTopIndex, vBase, vBase+1],
+                color: faceColor,
+                type: 'tri'
+            });
+        }
+
+        function project(p) {
+            const scale = fov / (viewDist + p.z);
+            return {
+                x: (p.x * scale) + (width / 2),
+                y: (p.y * scale) + (height / 2),
+                scale: scale,
+                d: viewDist + p.z
+            };
+        }
+
+        function rotateY(p, ang) {
+            const cos = Math.cos(ang);
+            const sin = Math.sin(ang);
+            return {
+                x: p.x * cos - p.z * sin,
+                y: p.y,
+                z: p.x * sin + p.z * cos
+            };
+        }
+
+        function render() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height);
+
+            angle += 0.02;
+
+            const transformedVerts = vertices.map(v => {
+                let rot = rotateY(v, angle);
+                rot.y += 0.5; 
+                return rot;
+            });
+
+            const projectedVerts = transformedVerts.map(v => project(v));
+
+            const sortedFaces = faces.map(face => {
+                let zSum = 0;
+                face.verts.forEach(idx => {
+                    zSum += transformedVerts[idx].z;
+                });
+                return { ...face, zAvg: zSum / face.verts.length };
+            }).sort((a, b) => b.zAvg - a.zAvg);
+
+            sortedFaces.forEach(face => {
+                ctx.beginPath();
+                
+                const jitter = (val) => Math.floor(val); 
+
+                if (face.type === 'line') {
+                    const p1 = projectedVerts[face.verts[0]];
+                    const p2 = projectedVerts[face.verts[1]];
+                    ctx.strokeStyle = face.color;
+                    ctx.lineWidth = 4 * p1.scale * 0.1;
+                    ctx.moveTo(jitter(p1.x), jitter(p1.y));
+                    ctx.lineTo(jitter(p2.x), jitter(p2.y));
+                    ctx.stroke();
+                } else {
+                    const p1 = projectedVerts[face.verts[0]];
+                    const p2 = projectedVerts[face.verts[1]];
+                    const p3 = projectedVerts[face.verts[2]];
+
+                    ctx.fillStyle = face.color;
+                    ctx.strokeStyle = face.color; 
+                    ctx.lineWidth = 1;
+
+                    ctx.moveTo(jitter(p1.x), jitter(p1.y));
+                    ctx.lineTo(jitter(p2.x), jitter(p2.y));
+                    ctx.lineTo(jitter(p3.x), jitter(p3.y));
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                }
+            });
+
+            ctx.fillStyle = "rgba(0,0,0,0.1)"; 
+            for(let y = 0; y < height; y += 2) {
+                ctx.fillRect(0, y, width, 1);
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+    </script>
+</body>
+</html>
