@@ -47,6 +47,39 @@
             animation: scroll-left 10s linear infinite;
         }
 
+        #controls {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #ff0000;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #ff0000;
+        }
+
+        .btn:hover {
+            background: #222;
+        }
+
         @keyframes scroll-left {
             0% { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
@@ -58,11 +91,17 @@
     <div id="ui-layer">
         <div class="scrolling-text">I love you... You're always awesome :3... Mwuah... Mwuah... Mwauh... Mwuuuuaaaaaaah >:3...</div>
     </div>
+    
     <canvas id="renderCanvas"></canvas>
+
+    <div id="controls">
+        <button class="btn" id="downloadBtn">Save Specimen</button>
+    </div>
 
     <script>
         const canvas = document.getElementById('renderCanvas');
         const ctx = canvas.getContext('2d');
+        const downloadBtn = document.getElementById('downloadBtn');
 
         const width = 320;
         const height = 240;
@@ -70,50 +109,201 @@
         canvas.height = height;
 
         const fov = 250;
-        const viewDist = 4;
+        const viewDist = 5;
         let angle = 0;
-
-        const petalCount = Math.floor(Math.random() * 8) + 4; 
-        const petalLength = 0.8 + Math.random() * 1.5;
-        const petalWidth = 0.3 + Math.random() * 0.5;
-        const stemHeight = 2 + Math.random() * 1.5;
-        const flowerHue = Math.random() * 360;
-        const flowerSat = 50 + Math.random() * 50;
 
         const vertices = [];
         const faces = [];
 
-        vertices.push({x: 0, y: stemHeight, z: 0}); 
-        vertices.push({x: 0, y: 0, z: 0}); 
+        function addVertex(x, y, z) {
+            vertices.push({x, y, z});
+            return vertices.length - 1;
+        }
 
-        const stemColor = `hsl(100, 60%, 30%)`;
-        faces.push({verts: [0, 1], color: stemColor, type: 'line'});
-
-        const centerTopIndex = vertices.length;
-        vertices.push({x: 0, y: -0.2, z: 0}); 
-        
-        for (let i = 0; i < petalCount; i++) {
-            const theta = (i / petalCount) * Math.PI * 2;
-            const nextTheta = ((i + 1) / petalCount) * Math.PI * 2;
-
-            const p1x = Math.cos(theta) * petalWidth;
-            const p1z = Math.sin(theta) * petalWidth;
-            const p2x = Math.cos(theta) * petalLength;
-            const p2z = Math.sin(theta) * petalLength;
-            
-            const vBase = vertices.length;
-            
-            vertices.push({x: p1x, y: 0, z: p1z});
-            vertices.push({x: p2x, y: -0.5, z: p2z}); 
-
-            const brightness = 30 + Math.random() * 40;
-            const faceColor = `hsl(${flowerHue}, ${flowerSat}%, ${brightness}%)`;
-
+        function addFace(v1, v2, v3, color) {
             faces.push({
-                verts: [centerTopIndex, vBase, vBase+1],
-                color: faceColor,
-                type: 'tri'
+                verts: [v1, v2, v3],
+                color: color
             });
+        }
+
+        function addQuad(v1, v2, v3, v4, color) {
+            addFace(v1, v2, v3, color);
+            addFace(v1, v3, v4, color);
+        }
+
+        function generateStem(h, radius, segments) {
+            const stemVerts = [];
+            for (let i = 0; i <= segments; i++) {
+                const y = (i / segments) * h;
+                const ring = [];
+                const r = radius * (1 - (i/segments) * 0.2); 
+                for (let j = 0; j < 6; j++) {
+                    const theta = (j / 6) * Math.PI * 2;
+                    ring.push(addVertex(Math.cos(theta) * r, -y, Math.sin(theta) * r));
+                }
+                stemVerts.push(ring);
+            }
+
+            for (let i = 0; i < segments; i++) {
+                for (let j = 0; j < 6; j++) {
+                    const nextJ = (j + 1) % 6;
+                    const cVal = 20 + Math.random() * 10;
+                    const col = `hsl(100, 50%, ${cVal}%)`;
+                    addQuad(
+                        stemVerts[i][j],
+                        stemVerts[i][nextJ],
+                        stemVerts[i+1][nextJ],
+                        stemVerts[i+1][j],
+                        col
+                    );
+                }
+            }
+            return -h; 
+        }
+
+        function generateDaisy(stemTopY) {
+            const seedHue = Math.random() * 360;
+            
+            const centerTop = addVertex(0, stemTopY - 0.2, 0); 
+            const centerRadius = 0.25;
+            const centerRing = [];
+            for(let i=0; i<8; i++) {
+                const th = (i/8) * Math.PI * 2;
+                centerRing.push(addVertex(Math.cos(th)*centerRadius, stemTopY, Math.sin(th)*centerRadius));
+            }
+            for(let i=0; i<8; i++) {
+                const next = (i+1)%8;
+                addFace(centerTop, centerRing[i], centerRing[next], '#ffd700');
+            }
+
+            const layers = 2;
+            for(let lay=0; lay<layers; lay++) {
+                const count = 8 + Math.floor(Math.random() * 4);
+                const pLen = (1.0 + Math.random() * 0.8) - (lay * 0.2);
+                const pWid = 0.3;
+                
+                for(let i=0; i<count; i++) {
+                    const theta = (i / count) * Math.PI * 2 + (lay * 0.5);
+                    const c = Math.cos(theta);
+                    const s = Math.sin(theta);
+                    
+                    const bendY = stemTopY - 0.2;
+                    
+                    const vBaseL = addVertex(Math.cos(theta - 0.1)*0.1, stemTopY, Math.sin(theta - 0.1)*0.1);
+                    const vBaseR = addVertex(Math.cos(theta + 0.1)*0.1, stemTopY, Math.sin(theta + 0.1)*0.1);
+                    
+                    const vMidL = addVertex(Math.cos(theta - 0.2)*pWid, bendY, Math.sin(theta - 0.2)*pWid);
+                    const vMidR = addVertex(Math.cos(theta + 0.2)*pWid, bendY, Math.sin(theta + 0.2)*pWid);
+
+                    const vTip = addVertex(c*pLen, bendY - 0.2, s*pLen);
+
+                    const sat = 60 + Math.random() * 20;
+                    const light = 50 + (lay*10) + Math.random() * 10;
+                    const pColor = `hsl(${seedHue}, ${sat}%, ${light}%)`;
+                    const pColorDark = `hsl(${seedHue}, ${sat}%, ${light - 15}%)`;
+
+                    addQuad(vBaseL, vMidL, vMidR, vBaseR, pColorDark);
+                    addFace(vMidL, vTip, vMidR, pColor);
+                }
+            }
+        }
+
+        function generateTulip(stemTopY) {
+            const seedHue = Math.random() * 360;
+            const petalCount = 6;
+            const layers = 2;
+            const height = 1.2;
+            const widthTop = 0.5;
+            const widthBase = 0.3;
+
+            for (let l = 0; l < layers; l++) {
+                for (let i = 0; i < petalCount; i++) {
+                    const theta = ((i + (l * 0.5)) / petalCount) * Math.PI * 2;
+                    
+                    const c = Math.cos(theta);
+                    const s = Math.sin(theta);
+
+                    const vBase = addVertex(c * widthBase * 0.5, stemTopY, s * widthBase * 0.5);
+                    const vMid = addVertex(c * widthBase * 1.5, stemTopY - (height * 0.5), s * widthBase * 1.5);
+                    const vTip = addVertex(c * widthTop * (1 - l*0.2), stemTopY - height, s * widthTop * (1 - l*0.2));
+                    const vNextBase = addVertex(Math.cos(theta+0.5) * widthBase * 0.5, stemTopY, Math.sin(theta+0.5) * widthBase * 0.5);
+
+                    const sat = 70 + Math.random() * 20;
+                    const light = 40 + Math.random() * 10 + (l * 10);
+                    const col = `hsl(${seedHue}, ${sat}%, ${light}%)`;
+
+                    addFace(vBase, vMid, vNextBase, col);
+                    addFace(vMid, vTip, vNextBase, col);
+                }
+            }
+        }
+
+        function generateRose(stemTopY) {
+            const seedHue = 340 + Math.random() * 40; 
+            const layers = 5;
+            
+            for (let l = 0; l < layers; l++) {
+                const count = 4 + l;
+                const radius = 0.2 + (l * 0.15);
+                const yOff = stemTopY - (l * 0.1);
+                const h = 0.5 + (l * 0.1);
+
+                for (let i = 0; i < count; i++) {
+                    const theta = (i / count) * Math.PI * 2 + (l * 1.5);
+                    
+                    const vBL = addVertex(Math.cos(theta-0.5)*radius, yOff, Math.sin(theta-0.5)*radius);
+                    const vBR = addVertex(Math.cos(theta+0.5)*radius, yOff, Math.sin(theta+0.5)*radius);
+                    
+                    const lean = 1.0 + (l * 0.3);
+                    const vTL = addVertex(Math.cos(theta-0.6)*radius*lean, yOff - h, Math.sin(theta-0.6)*radius*lean);
+                    const vTR = addVertex(Math.cos(theta+0.6)*radius*lean, yOff - h, Math.sin(theta+0.6)*radius*lean);
+
+                    const col = `hsl(${seedHue}, 80%, ${30 + l * 10}%)`;
+                    addQuad(vBL, vTL, vTR, vBR, col);
+                }
+            }
+        }
+
+        function generateCrystal(stemTopY) {
+            const seedHue = 180 + Math.random() * 60; 
+            const shards = 12;
+            
+            for(let i=0; i<shards; i++) {
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.random() * Math.PI * 0.5; 
+                
+                const len = 0.5 + Math.random() * 1.0;
+                
+                const x = Math.cos(theta) * Math.sin(phi);
+                const z = Math.sin(theta) * Math.sin(phi);
+                const y = Math.cos(phi);
+
+                const vBase1 = addVertex(x*0.1, stemTopY, z*0.1);
+                const vBase2 = addVertex(x*0.1 + 0.1, stemTopY, z*0.1);
+                const vBase3 = addVertex(x*0.1, stemTopY, z*0.1 + 0.1);
+                const vTip = addVertex(x*len, stemTopY - (y*len), z*len);
+
+                const col = `hsla(${seedHue}, 70%, 70%, 0.8)`;
+                addFace(vBase1, vBase2, vTip, col);
+                addFace(vBase2, vBase3, vTip, col);
+                addFace(vBase3, vBase1, vTip, col);
+            }
+        }
+
+        const stemH = 2.5 + Math.random() * 1.0;
+        const stemTop = generateStem(stemH, 0.15, 6);
+        
+        const style = Math.random();
+        
+        if (style < 0.25) {
+            generateDaisy(stemTop);
+        } else if (style < 0.5) {
+            generateTulip(stemTop);
+        } else if (style < 0.75) {
+            generateRose(stemTop);
+        } else {
+            generateCrystal(stemTop);
         }
 
         function project(p) {
@@ -140,11 +330,17 @@
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, width, height);
 
-            angle += 0.02;
+            angle += 0.015;
 
             const transformedVerts = vertices.map(v => {
-                let rot = rotateY(v, angle);
-                rot.y += 0.5; 
+                // Moved Y offset from 1.2 to 2.0 to move flower down
+                let shiftedY = v.y + 2.0; 
+                
+                let rot = rotateY({x: v.x, y: shiftedY, z: v.z}, angle);
+                
+                // Wobble
+                rot.y += Math.sin(Date.now() * 0.002 + v.x) * 0.03;
+
                 return rot;
             });
 
@@ -159,37 +355,27 @@
             }).sort((a, b) => b.zAvg - a.zAvg);
 
             sortedFaces.forEach(face => {
-                ctx.beginPath();
-                
+                if (face.zAvg < -viewDist + 0.1) return;
+
+                const pts = face.verts.map(idx => projectedVerts[idx]);
                 const jitter = (val) => Math.floor(val); 
 
-                if (face.type === 'line') {
-                    const p1 = projectedVerts[face.verts[0]];
-                    const p2 = projectedVerts[face.verts[1]];
-                    ctx.strokeStyle = face.color;
-                    ctx.lineWidth = 4 * p1.scale * 0.1;
-                    ctx.moveTo(jitter(p1.x), jitter(p1.y));
-                    ctx.lineTo(jitter(p2.x), jitter(p2.y));
-                    ctx.stroke();
-                } else {
-                    const p1 = projectedVerts[face.verts[0]];
-                    const p2 = projectedVerts[face.verts[1]];
-                    const p3 = projectedVerts[face.verts[2]];
-
-                    ctx.fillStyle = face.color;
-                    ctx.strokeStyle = face.color; 
-                    ctx.lineWidth = 1;
-
-                    ctx.moveTo(jitter(p1.x), jitter(p1.y));
-                    ctx.lineTo(jitter(p2.x), jitter(p2.y));
-                    ctx.lineTo(jitter(p3.x), jitter(p3.y));
-                    ctx.closePath();
-                    ctx.fill();
-                    ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(jitter(pts[0].x), jitter(pts[0].y));
+                for (let i = 1; i < pts.length; i++) {
+                    ctx.lineTo(jitter(pts[i].x), jitter(pts[i].y));
                 }
+                ctx.closePath();
+
+                ctx.fillStyle = face.color;
+                ctx.strokeStyle = face.color;
+                ctx.lineWidth = 1;
+                
+                ctx.fill();
+                ctx.stroke();
             });
 
-            ctx.fillStyle = "rgba(0,0,0,0.1)"; 
+            ctx.fillStyle = "rgba(0,0,0,0.15)"; 
             for(let y = 0; y < height; y += 2) {
                 ctx.fillRect(0, y, width, 1);
             }
@@ -198,6 +384,13 @@
         }
 
         render();
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'psx_flower_for_holly.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
 
     </script>
 </body>
