@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art Maker V2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+        :root {
+            --primary-red: #ff5e5e;
+            --bg-color: #fafafa;
+            --text-color: #ff5e5e;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Varela Round', sans-serif;
+            color: var(--text-color);
+            user-select: none;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .main-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            border: 4px solid var(--primary-red);
+            border-radius: 4px;
+            cursor: crosshair;
+            box-shadow: 0 4px 0 rgba(255, 94, 94, 0.3);
+            /* Ensure crisp rendering on high DPI screens */
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        canvas {
+            display: block;
+            /* Visual size on screen */
+            width: 512px;
+            height: 512px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Color Picker Styling */
+        .color-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f0f0;
+            padding: 5px 15px;
+            border-radius: 50px;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            background: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: 2px solid #ddd;
+            border-radius: 50%;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button.action-btn {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 4px 0 #cc4b4b;
+        }
+
+        button.action-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        button.action-btn.secondary {
+            background-color: #eee;
+            color: #555;
+            box-shadow: 0 4px 0 #ccc;
+        }
+
+        /* File Upload Styling */
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .grid-toggle {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>pixel drawer v2</h1>
+        
+        <div class="canvas-wrapper">
+            <canvas id="artCanvas" width="64" height="64"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="color-wrapper">
+                <span>Color:</span>
+                <input type="color" id="colorPicker" value="#ff5e5e">
+            </div>
+
+            <div class="upload-btn-wrapper">
+                <button class="action-btn secondary">Upload Photo</button>
+                <input type="file" id="imageUpload" accept="image/*">
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn secondary" id="clearBtn">Clear</button>
+            <button class="action-btn" id="saveBtn">Save Image</button>
+        </div>
+        
+        <label class="grid-toggle">
+            <input type="checkbox" id="gridCheck" checked> Show Grid
+        </label>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('artCanvas');
+        const ctx = canvas.getContext('2d');
+        const colorPicker = document.getElementById('colorPicker');
+        const clearBtn = document.getElementById('clearBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const gridCheck = document.getElementById('gridCheck');
+        const imageUpload = document.getElementById('imageUpload');
+
+        // Logic constants
+        const RESOLUTION = 64; // Increased resolution
+        const PIXEL_SIZE = 1; // Native pixel size is 1, handled by canvas scaling
+        
+        let isDrawing = false;
+        let currentColor = '#ff5e5e';
+        // Initialize 2D array for pixel data
+        let pixelData = Array(RESOLUTION).fill().map(() => Array(RESOLUTION).fill('#ffffff'));
+
+        // --- Initialization ---
+        function init() {
+            render();
+        }
+
+        // --- Drawing Logic ---
+        function drawGrid() {
+            if (!gridCheck.checked) return;
+            
+            // We draw the grid on top of the pixels
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            
+            // Because canvas is 64x64, a 1px line is too thick relative to canvas.
+            // We simulate a grid by not drawing on the canvas directly, 
+            // but relying on the pixelation. 
+            // However, to satisfy the visual, we can use a loop but it might obscure art at this resolution.
+            // A better approach for low-res canvas is an overlay or skip it if it looks messy.
+            // Let's draw a very faint grid.
+            
+            // Note: Drawing 1px lines on a 64px canvas covers the pixels. 
+            // We will skip actual line drawing on the data canvas to keep export clean,
+            // but visually the user sees the sharp edges due to CSS 'pixelated'.
+        }
+
+        function render() {
+            // Clear
+            ctx.clearRect(0, 0, RESOLUTION, RESOLUTION);
+            
+            // Draw Pixels
+            for (let y = 0; y < RESOLUTION; y++) {
+                for (let x = 0; x < RESOLUTION; x++) {
+                    ctx.fillStyle = pixelData[y][x];
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+
+        function paint(e) {
+            if (!isDrawing) return;
+
+            // Get coordinates relative to the visual size (512px)
+            const rect = canvas.getBoundingClientRect();
+            
+            // Calculate scale factor (Visual size / Actual resolution)
+            const scaleX = rect.width / RESOLUTION;
+            const scaleY = rect.height / RESOLUTION;
+
+            const x = Math.floor((e.clientX - rect.left) / scaleX);
+            const y = Math.floor((e.clientY - rect.top) / scaleY);
+
+            if (x >= 0 && x < RESOLUTION && y >= 0 && y < RESOLUTION) {
+                pixelData[y][x] = currentColor;
+                
+                // Optimized drawing: just draw the one pixel instead of re-rendering whole canvas
+                ctx.fillStyle = currentColor;
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
+
+        // --- Event Listeners ---
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            paint(e);
+        });
+
+        canvas.addEventListener('mousemove', paint);
+        
+        window.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        colorPicker.addEventListener('input', (e) => {
+            currentColor = e.target.value;
+        });
+
+        clearBtn.addEventListener('click', () => {
+            pixelData = Array(RESOLUTION).fill().map(() => Array(RESOLUTION).fill('#ffffff'));
+            render();
+        });
+
+        gridCheck.addEventListener('change', () => {
+            // CSS toggle for the border effect if we wanted one, 
+            // but here we just re-render. Since we aren't drawing lines on the canvas
+            // we rely on CSS. Let's add a CSS class to the canvas for grid.
+            if(gridCheck.checked) {
+                canvas.style.backgroundImage = `
+                    linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)
+                `;
+                canvas.style.backgroundSize = `${canvas.clientWidth/RESOLUTION}px ${canvas.clientHeight/RESOLUTION}px`;
+            } else {
+                canvas.style.backgroundImage = 'none';
+            }
+        });
+
+        // Initialize grid visual
+        canvas.style.backgroundImage = `
+            linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)
+        `;
+        canvas.style.backgroundSize = `${512/RESOLUTION}px ${512/RESOLUTION}px`;
+
+
+        saveBtn.addEventListener('click', () => {
+            // To save a bigger image than 64x64, we create a temp canvas
+            const exportSize = 1024;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = exportSize;
+            tempCanvas.height = exportSize;
+            const tCtx = tempCanvas.getContext('2d');
+            
+            // Disable smoothing for pixel art look
+            tCtx.imageSmoothingEnabled = false;
+            
+            // Draw the 64x64 image scaled up
+            tCtx.drawImage(canvas, 0, 0, exportSize, exportSize);
+
+            const link = document.createElement('a');
+            link.download = 'my-pixel-art.png';
+            link.href = tempCanvas.toDataURL();
+            link.click();
+        });
+
+        // --- Image Upload & Processing Logic ---
+
+        imageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    processImage(img);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function processImage(img) {
+            // 1. Draw image to an offscreen canvas to get pixel data
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width = RESOLUTION;
+            offCanvas.height = RESOLUTION;
+            const offCtx = offCanvas.getContext('2d');
+
+            // Draw image scaled to fit 64x64
+            // We use 'cover' logic or just stretch. Let's maintain aspect ratio and center.
+            let sWidth, sHeight, dx, dy;
+            const aspect = img.width / img.height;
+            
+            if (aspect > 1) {
+                sWidth = RESOLUTION;
+                sHeight = RESOLUTION / aspect;
+                dx = 0;
+                dy = (RESOLUTION - sHeight) / 2;
+            } else {
+                sWidth = RESOLUTION * aspect;
+                sHeight = RESOLUTION;
+                dx = (RESOLUTION - sWidth) / 2;
+                dy = 0;
+            }
+
+            // Fill white first
+            offCtx.fillStyle = '#ffffff';
+            offCtx.fillRect(0, 0, RESOLUTION, RESOLUTION);
+            offCtx.drawImage(img, dx, dy, sWidth, sHeight);
+
+            // 2. Get Data and Threshold
+            const imageData = offCtx.getImageData(0, 0, RESOLUTION, RESOLUTION);
+            const data = imageData.data;
+
+            for (let y = 0; y < RESOLUTION; y++) {
+                for (let x = 0; x < RESOLUTION; x++) {
+                    const i = (y * RESOLUTION + x) * 4;
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    
+                    // Simple luminance formula
+                    const brightness = (r + g + b) / 3;
+
+                    // Threshold: If dark, make it the selected color. If light, make it white.
+                    if (brightness < 128) {
+                        pixelData[y][x] = currentColor;
+                    } else {
+                        pixelData[y][x] = '#ffffff';
+                    }
+                }
+            }
+            render();
+            // Clear the input so same file can be selected again if needed
+            imageUpload.value = '';
+        }
+
+        init();
+
+    </script>
+</body>
+</html>
