@@ -49,7 +49,6 @@
             border-radius: 4px;
             cursor: crosshair;
             box-shadow: 0 4px 0 rgba(255, 94, 94, 0.3);
-            /* Ensure crisp rendering on high DPI screens */
             image-rendering: -moz-crisp-edges;
             image-rendering: -webkit-crisp-edges;
             image-rendering: pixelated;
@@ -58,7 +57,6 @@
 
         canvas {
             display: block;
-            /* Visual size on screen */
             width: 512px;
             height: 512px;
         }
@@ -72,7 +70,6 @@
             flex-wrap: wrap;
         }
 
-        /* Color Picker Styling */
         .color-wrapper {
             display: flex;
             align-items: center;
@@ -129,7 +126,6 @@
             box-shadow: 0 4px 0 #ccc;
         }
 
-        /* File Upload Styling */
         .upload-btn-wrapper {
             position: relative;
             overflow: hidden;
@@ -197,44 +193,26 @@
         const gridCheck = document.getElementById('gridCheck');
         const imageUpload = document.getElementById('imageUpload');
 
-        // Logic constants
-        const RESOLUTION = 64; // Increased resolution
-        const PIXEL_SIZE = 1; // Native pixel size is 1, handled by canvas scaling
+        const RESOLUTION = 64;
+        const PIXEL_SIZE = 1;
         
         let isDrawing = false;
         let currentColor = '#ff5e5e';
-        // Initialize 2D array for pixel data
         let pixelData = Array(RESOLUTION).fill().map(() => Array(RESOLUTION).fill('#ffffff'));
 
-        // --- Initialization ---
         function init() {
             render();
         }
 
-        // --- Drawing Logic ---
         function drawGrid() {
             if (!gridCheck.checked) return;
             
-            // We draw the grid on top of the pixels
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            
-            // Because canvas is 64x64, a 1px line is too thick relative to canvas.
-            // We simulate a grid by not drawing on the canvas directly, 
-            // but relying on the pixelation. 
-            // However, to satisfy the visual, we can use a loop but it might obscure art at this resolution.
-            // A better approach for low-res canvas is an overlay or skip it if it looks messy.
-            // Let's draw a very faint grid.
-            
-            // Note: Drawing 1px lines on a 64px canvas covers the pixels. 
-            // We will skip actual line drawing on the data canvas to keep export clean,
-            // but visually the user sees the sharp edges due to CSS 'pixelated'.
         }
 
         function render() {
-            // Clear
             ctx.clearRect(0, 0, RESOLUTION, RESOLUTION);
             
-            // Draw Pixels
             for (let y = 0; y < RESOLUTION; y++) {
                 for (let x = 0; x < RESOLUTION; x++) {
                     ctx.fillStyle = pixelData[y][x];
@@ -246,10 +224,8 @@
         function paint(e) {
             if (!isDrawing) return;
 
-            // Get coordinates relative to the visual size (512px)
             const rect = canvas.getBoundingClientRect();
             
-            // Calculate scale factor (Visual size / Actual resolution)
             const scaleX = rect.width / RESOLUTION;
             const scaleY = rect.height / RESOLUTION;
 
@@ -259,13 +235,10 @@
             if (x >= 0 && x < RESOLUTION && y >= 0 && y < RESOLUTION) {
                 pixelData[y][x] = currentColor;
                 
-                // Optimized drawing: just draw the one pixel instead of re-rendering whole canvas
                 ctx.fillStyle = currentColor;
                 ctx.fillRect(x, y, 1, 1);
             }
         }
-
-        // --- Event Listeners ---
 
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true;
@@ -288,9 +261,6 @@
         });
 
         gridCheck.addEventListener('change', () => {
-            // CSS toggle for the border effect if we wanted one, 
-            // but here we just re-render. Since we aren't drawing lines on the canvas
-            // we rely on CSS. Let's add a CSS class to the canvas for grid.
             if(gridCheck.checked) {
                 canvas.style.backgroundImage = `
                     linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
@@ -302,7 +272,6 @@
             }
         });
 
-        // Initialize grid visual
         canvas.style.backgroundImage = `
             linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)
@@ -311,17 +280,14 @@
 
 
         saveBtn.addEventListener('click', () => {
-            // To save a bigger image than 64x64, we create a temp canvas
             const exportSize = 1024;
             const tempCanvas = document.createElement('canvas');
             tempCanvas.width = exportSize;
             tempCanvas.height = exportSize;
             const tCtx = tempCanvas.getContext('2d');
             
-            // Disable smoothing for pixel art look
             tCtx.imageSmoothingEnabled = false;
             
-            // Draw the 64x64 image scaled up
             tCtx.drawImage(canvas, 0, 0, exportSize, exportSize);
 
             const link = document.createElement('a');
@@ -329,8 +295,6 @@
             link.href = tempCanvas.toDataURL();
             link.click();
         });
-
-        // --- Image Upload & Processing Logic ---
 
         imageUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -348,14 +312,11 @@
         });
 
         function processImage(img) {
-            // 1. Draw image to an offscreen canvas to get pixel data
             const offCanvas = document.createElement('canvas');
             offCanvas.width = RESOLUTION;
             offCanvas.height = RESOLUTION;
             const offCtx = offCanvas.getContext('2d');
 
-            // Draw image scaled to fit 64x64
-            // We use 'cover' logic or just stretch. Let's maintain aspect ratio and center.
             let sWidth, sHeight, dx, dy;
             const aspect = img.width / img.height;
             
@@ -371,12 +332,10 @@
                 dy = 0;
             }
 
-            // Fill white first
             offCtx.fillStyle = '#ffffff';
             offCtx.fillRect(0, 0, RESOLUTION, RESOLUTION);
             offCtx.drawImage(img, dx, dy, sWidth, sHeight);
 
-            // 2. Get Data and Threshold
             const imageData = offCtx.getImageData(0, 0, RESOLUTION, RESOLUTION);
             const data = imageData.data;
 
@@ -387,10 +346,8 @@
                     const g = data[i + 1];
                     const b = data[i + 2];
                     
-                    // Simple luminance formula
                     const brightness = (r + g + b) / 3;
 
-                    // Threshold: If dark, make it the selected color. If light, make it white.
                     if (brightness < 128) {
                         pixelData[y][x] = currentColor;
                     } else {
@@ -399,7 +356,6 @@
                 }
             }
             render();
-            // Clear the input so same file can be selected again if needed
             imageUpload.value = '';
         }
 
