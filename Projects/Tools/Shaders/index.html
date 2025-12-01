@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shader Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; 
+            color: #e2e8f0;
+            overflow: hidden; 
+        }
+
+        .editor-font {
+            font-family: 'Fira Code', monospace;
+            font-variant-ligatures: common-ligatures;
+            line-height: 1.5;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+
+        #canvas-container {
+            background-image: 
+                linear-gradient(45deg, #1e293b 25%, transparent 25%), 
+                linear-gradient(-45deg, #1e293b 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #1e293b 75%), 
+                linear-gradient(-45deg, transparent 75%, #1e293b 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        
+        textarea {
+            caret-color: #38bdf8;
+            outline: none;
+            resize: none;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col md:flex-row">
+
+    <div class="w-full md:w-1/2 flex flex-col border-r border-slate-700 bg-slate-900 h-1/2 md:h-full">
+        
+        <div class="flex items-center justify-between px-4 py-3 bg-slate-800 border-b border-slate-700 shadow-sm z-10">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <h1 class="font-bold text-lg tracking-tight">Shader<span class="text-indigo-400">Studio</span></h1>
+            </div>
+            <div class="flex space-x-2">
+                <button id="run-btn" class="flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold rounded transition shadow-lg shadow-green-900/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Run (Ctrl+E)
+                </button>
+                <button id="export-btn" class="flex items-center px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded transition shadow-lg shadow-indigo-900/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    Export Image
+                </button>
+            </div>
+        </div>
+
+        <div class="relative flex-grow bg-slate-900 group">
+            <textarea id="code-editor" class="w-full h-full p-4 bg-transparent text-slate-300 editor-font text-sm border-none focus:ring-0" spellcheck="false"></textarea>
+            <div class="absolute bottom-2 right-4 text-xs text-slate-500 pointer-events-none opacity-50">
+                GLSL ES 1.0
+            </div>
+        </div>
+
+        <div id="error-log" class="hidden h-32 bg-red-900/20 border-t border-red-900/50 p-4 overflow-y-auto font-mono text-xs text-red-400"></div>
+        
+        <div class="px-4 py-2 bg-slate-800 border-t border-slate-700 text-xs text-slate-400 flex justify-between items-center">
+            <span>Controls: <code class="bg-slate-700 px-1 rounded text-slate-200">A/D</code> Rotate <code class="bg-slate-700 px-1 rounded text-slate-200">Q/E</code> Zoom</span>
+            <span id="fps-counter" class="text-indigo-400 font-mono">0 FPS</span>
+        </div>
+    </div>
+
+    <div id="canvas-container" class="w-full md:w-1/2 h-1/2 md:h-full relative flex items-center justify-center bg-black">
+        <canvas id="gl-canvas" class="w-full h-full block"></canvas>
+        
+        <div class="absolute top-4 right-4 flex flex-col space-y-2 pointer-events-none">
+            <div id="status-indicator" class="px-3 py-1 bg-black/50 backdrop-blur rounded-full text-xs font-medium text-green-400 border border-white/10 flex items-center">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span> Live
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultShader = `precision highp float;
+
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform vec3 u_camera;
+
+// --- MATH & UTILS ---
+mat2 rot(float a) { float s=sin(a), c=cos(a); return mat2(c,-s,s,c); }
+
+// Smooth Min (for organic blending)
+float smin(float a, float b, float k) {
+    float h = clamp(0.5 + 0.5*(b-a)/k, 0.0, 1.0);
+    return mix(b, a, h) - k*h*(1.0-h);
+}
+
+// Noise for texture
+float hash(float n) { return fract(sin(n)*43758.5453); }
+float noise(vec3 x) {
+    vec3 p = floor(x);
+    vec3 f = fract(x);
+    f = f*f*(3.0-2.0*f);
+    float n = p.x + p.y*57.0 + p.z*113.0;
+    return mix(mix(mix(hash(n+0.0), hash(n+1.0),f.x),
+                   mix(hash(n+57.0), hash(n+58.0),f.x),f.y),
+               mix(mix(hash(n+113.0), hash(n+114.0),f.x),
+                   mix(hash(n+170.0), hash(n+171.0),f.x),f.y),f.z);
+}
+
+// --- SDF PRIMITIVES ---
+float sdSphere(vec3 p, float s) {
+    return length(p) - s;
+}
+
+float sdCapsule(vec3 p, vec3 a, vec3 b, float r) {
+    vec3 pa = p - a, ba = b - a;
+    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+    return length( pa - ba*h ) - r;
+}
+
+float sdCappedCone(vec3 p, float h, float r1, float r2) {
+    vec2 q = vec2( length(p.xz), p.y );
+    vec2 k1 = vec2(r2,h);
+    vec2 k2 = vec2(r2-r1,2.0*h);
+    vec2 ca = vec2(q.x-min(q.x,(q.y<0.0)?r1:r2), abs(q.y)-h);
+    vec2 cb = q - k1 + k2*clamp( dot(k1-q,k2)/dot(k2,k2), 0.0, 1.0 );
+    float s = (cb.x<0.0 && ca.y<0.0) ? -1.0 : 1.0;
+    return s*sqrt( min(dot(ca,ca),dot(cb,cb)) );
+}
+
+float sdBox(vec3 p, vec3 b) {
+    vec3 q = abs(p) - b;
+    return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
+}
+
+// --- MAP FUNCTION ---
+vec2 map(vec3 p) {
+    vec2 res = vec2(100.0, 0.0); // d, materialID
+
+    // Animation vars
+    float breath = sin(u_time * 2.0) * 0.015;
+    float wobble = cos(u_time * 2.5) * 0.03;
+
+    // --- GOOSE ---
+    // Body
+    vec3 pBody = p;
+    pBody.y -= -0.35;
+    pBody.x *= 1.15; // More oblong
+    float dBody = length(pBody) - 0.55;
+    // Add feather noise texture
+    dBody += 0.005 * noise(p * 15.0);
+
+    // Neck
+    vec3 pNeckBase = vec3(0.38, -0.2, 0.0);
+    vec3 pNeckTop = vec3(0.55, 0.4 + breath, 0.0);
+    float dNeck = sdCapsule(p, pNeckBase, pNeckTop, 0.11);
+    
+    // Head Sphere (for blending)
+    float dHeadBase = length(p - pNeckTop) - 0.11;
+
+    // Beak
+    vec3 pBeak = p - pNeckTop;
+    pBeak.xy *= rot(-0.2); // Angle down
+    pBeak -= vec3(0.12, -0.02, 0.0);
+    float dBeak = sdCappedCone(pBeak.yxz, 0.15, 0.02, 0.06);
+
+    // Eyes
+    vec3 pEyes = p - pNeckTop;
+    pEyes.x -= 0.05;
+    pEyes.z = abs(pEyes.z); // Mirror z
+    pEyes -= vec3(0.0, 0.05, 0.08);
+    float dEyes = length(pEyes) - 0.03;
+
+    // Combine Goose Parts
+    float dGoose = smin(dBody, dNeck, 0.08);
+    dGoose = smin(dGoose, dHeadBase, 0.1);
+    dGoose = smin(dGoose, dBeak, 0.02);
+    dGoose = min(dGoose, dEyes);
+
+    // Legs
+    vec3 pLegL = p - vec3(0.05, -0.9, 0.15);
+    vec3 pLegR = p - vec3(0.05, -0.9, -0.15);
+    float dLegs = sdCapsule(pLegL, vec3(0.0, 0.3, 0.0), vec3(0.0, -0.1, 0.0), 0.035);
+    dLegs = min(dLegs, sdCapsule(pLegR, vec3(0.0, 0.3, 0.0), vec3(0.0, -0.1, 0.0), 0.035));
+    
+    // Feet (Webbed look via flattened box)
+    vec3 pFootL = pLegL - vec3(0.12, -0.1, 0.0);
+    vec3 pFootR = pLegR - vec3(0.12, -0.1, 0.0);
+    float dFeet = sdBox(pFootL, vec3(0.12, 0.015, 0.09));
+    dFeet = min(dFeet, sdBox(pFootR, vec3(0.12, 0.015, 0.09)));
+    
+    dGoose = min(dGoose, dLegs);
+    dGoose = min(dGoose, dFeet);
+
+    if (dGoose < res.x) {
+        float id = 1.0;
+        if (dEyes < dGoose + 0.01) id = 3.0; // Eyes ID
+        else if (dBeak < dGoose + 0.05 && p.x > pNeckTop.x) id = 4.0; // Beak ID
+        res = vec2(dGoose, id); 
+    }
+
+    // --- TRAFFIC CONE ---
+    vec3 pCone = p - pNeckTop;
+    pCone.xy *= rot(0.25 + wobble); 
+    pCone.yz *= rot(wobble * 0.5);
+    
+    // Cone Body
+    vec3 pConeBody = pCone - vec3(0.0, 0.28, 0.0);
+    float dConeMain = sdCappedCone(pConeBody, 0.38, 0.16, 0.05);
+    
+    // Reflective Stripe Check
+    // We check relative Y height on the cone body
+    float stripeH = pConeBody.y; 
+    bool isStripe = (stripeH > -0.1 && stripeH < 0.1);
+
+    // Cone Base
+    vec3 pConeBase = pCone - vec3(0.0, -0.1, 0.0);
+    float dConePlate = sdBox(pConeBase, vec3(0.22, 0.02, 0.22));
+    
+    float dCone = min(dConeMain, dConePlate);
+    
+    if (dCone < res.x) {
+        float id = 2.0;
+        if (dConeMain < dConePlate && isStripe) id = 2.5; // Reflective Stripe ID
+        res = vec2(dCone, id); 
+    }
+
+    return res;
+}
+
+vec3 calcNormal(vec3 p) {
+    vec2 e = vec2(0.001, 0.0);
+    return normalize(vec3(map(p+e.xyy).x-map(p-e.xyy).x,
+                          map(p+e.yxy).x-map(p-e.yxy).x,
+                          map(p+e.yyx).x-map(p-e.yyx).x));
+}
+
+float rayMarch(vec3 ro, vec3 rd) {
+    float dO=0.0;
+    for(int i=0;i<60;i++) { 
+        vec3 p=ro+rd*dO;
+        float dS=map(p).x;
+        dO+=dS;
+        if(dO>12.0 || abs(dS)<0.002) break;
+    }
+    return dO;
+}
+
+void main() {
+    // 1. Setup Grid (Higher Density = More Detail)
+    float density = 140.0; 
+    
+    vec2 st = gl_FragCoord.xy / u_resolution.xy;
+    st.x *= u_resolution.x / u_resolution.y; 
+    
+    vec2 gridUV = fract(st * density);
+    vec2 cellID = floor(st * density);
+    vec2 cellCenterUV = (cellID + 0.5) / density;
+    cellCenterUV.x /= (u_resolution.x / u_resolution.y); 
+    
+    vec2 uv = cellCenterUV * 2.0 - 1.0;
+    uv.x *= u_resolution.x / u_resolution.y;
+
+    // 2. Camera
+    vec3 ro = vec3(0.0, 0.0, u_camera.z); 
+    ro.yz *= rot(u_camera.y);
+    ro.xz *= rot(u_camera.x);
+    
+    vec3 rd = normalize(vec3(uv, 1.8)); // Narrower FOV for portrait look
+    rd.yz *= rot(u_camera.y);
+    rd.xz *= rot(u_camera.x);
+
+    // 3. March
+    float d = rayMarch(ro, rd);
+    
+    vec3 col = vec3(0.0);
+
+    if(d < 12.0) {
+        vec3 p = ro + rd * d;
+        vec3 n = calcNormal(p);
+        vec2 mat = map(p); 
+        
+        // Lighting
+        vec3 lightPos = vec3(2.0, 5.0, -3.0);
+        vec3 l = normalize(lightPos);
+        vec3 v = -rd;
+        vec3 h = normalize(l + v);
+        
+        float dif = max(dot(n, l), 0.0);
+        float spec = pow(max(dot(n, h), 0.0), 16.0); // Sharp highlights
+        float rim = pow(1.0 - max(dot(n, v), 0.0), 2.5);
+        
+        // Determine Dot Brightness/Size
+        float brightness = 0.0;
+        
+        // Material Logic
+        if (mat.y == 2.0) { // Orange Cone
+            brightness = 0.3 + dif * 0.5 + spec * 0.4;
+        } else if (mat.y == 2.5) { // Reflective White Stripe
+            brightness = 0.8 + spec * 0.8; // Very bright
+        } else if (mat.y == 3.0) { // Eyes
+            brightness = 0.1 + spec * 2.0; // Dark but shiny
+        } else if (mat.y == 4.0) { // Beak
+            brightness = 0.4 + dif * 0.4;
+        } else { // Goose Body
+            brightness = 0.15 + dif * 0.3 + rim * 0.5; // Rim heavy
+        }
+        
+        // Size
+        float maxRadius = 0.48;
+        float radius = clamp(brightness * 0.5, 0.05, maxRadius);
+        
+        float distToCenter = length(gridUV - 0.5);
+        float dotShape = 1.0 - smoothstep(radius - 0.05, radius + 0.05, distToCenter);
+        
+        col = vec3(dotShape);
+    }
+
+    gl_FragColor = vec4(col, 1.0);
+}`;
+
+        const canvas = document.getElementById('gl-canvas');
+        const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true });
+        const editor = document.getElementById('code-editor');
+        const runBtn = document.getElementById('run-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const errorLog = document.getElementById('error-log');
+        const fpsCounter = document.getElementById('fps-counter');
+
+        if (!gl) {
+            alert("WebGL not supported by your browser.");
+        }
+
+        let program = null;
+        let positionLocation = null;
+        let timeLocation = null;
+        let resolutionLocation = null;
+        let cameraLocation = null;
+        let buffer = null;
+        
+        let cam = { yaw: 0.0, pitch: 0.0, zoom: -3.0 };
+        let keys = { w: false, a: false, s: false, d: false, q: false, e: false };
+
+        let startTime = Date.now();
+        let frameCount = 0;
+        let lastTime = startTime;
+
+        const vsSource = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
+            throw new Error(gl.getShaderInfoLog(shader));
+        }
+
+        function updateShader() {
+            const fsSource = editor.value;
+            errorLog.classList.add('hidden');
+            errorLog.innerText = '';
+            try {
+                const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+                const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+                const newProgram = gl.createProgram();
+                gl.attachShader(newProgram, vs);
+                gl.attachShader(newProgram, fs);
+                gl.linkProgram(newProgram);
+                if (!gl.getProgramParameter(newProgram, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(newProgram));
+                if (program) gl.deleteProgram(program);
+                program = newProgram;
+                positionLocation = gl.getAttribLocation(program, "position");
+                timeLocation = gl.getUniformLocation(program, "u_time");
+                resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+                cameraLocation = gl.getUniformLocation(program, "u_camera");
+                buffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0]), gl.STATIC_DRAW);
+            } catch (e) {
+                errorLog.classList.remove('hidden');
+                errorLog.innerText = "Compilation Error:\n" + e.message;
+            }
+        }
+
+        function resize() {
+            const displayWidth  = canvas.parentElement.clientWidth;
+            const displayHeight = canvas.parentElement.clientHeight;
+            if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+                canvas.width = displayWidth;
+                canvas.height = displayHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function render() {
+            resize();
+            const rotSpeed = 0.02; const zoomSpeed = 0.05;
+            
+            if (keys.a) cam.yaw -= rotSpeed; if (keys.d) cam.yaw += rotSpeed;
+            if (keys.q) cam.zoom += zoomSpeed; if (keys.e) cam.zoom -= zoomSpeed;
+            
+            cam.zoom = Math.min(-1.5, Math.max(-5.0, cam.zoom));
+
+            if (!program) return;
+            gl.useProgram(program);
+            gl.enableVertexAttribArray(positionLocation);
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+            const currentTime = (Date.now() - startTime) / 1000;
+            gl.uniform1f(timeLocation, currentTime);
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            gl.uniform3f(cameraLocation, cam.yaw, cam.pitch, cam.zoom);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+            frameCount++;
+            if (currentTime * 1000 - (lastTime - startTime) >= 1000) {
+                fpsCounter.innerText = frameCount + " FPS";
+                frameCount = 0; lastTime = Date.now();
+            }
+            requestAnimationFrame(render);
+        }
+
+        window.addEventListener('keydown', e => { const k = e.key.toLowerCase(); if (keys.hasOwnProperty(k)) keys[k] = true; });
+        window.addEventListener('keyup', e => { const k = e.key.toLowerCase(); if (keys.hasOwnProperty(k)) keys[k] = false; });
+        runBtn.addEventListener('click', updateShader);
+        exportBtn.addEventListener('click', () => {
+            render(); 
+            const link = document.createElement('a');
+            link.download = `shader_art_${Date.now()}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+        document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); updateShader(); }});
+
+        editor.value = defaultShader;
+        updateShader();
+        requestAnimationFrame(render);
+    </script>
+</body>
+</html>
