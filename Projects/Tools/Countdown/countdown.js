@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () { 
-    const countDownDate = new Date("2025-12-09T00:00:00").getTime();
+    const countDownDate = new Date("2025-12-11T00:00:00").getTime();
     const countdownElement = document.getElementById("countdown");
     
     let rotationAngle = 0;
@@ -44,5 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error fetching DailyCopypastaStatus.txt:', error));
 });
+
 
 
